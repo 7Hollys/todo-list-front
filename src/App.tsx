@@ -1,8 +1,8 @@
-import React from "react";
-import "./App.scss";
+import React from "react"
+import "./App.scss"
 
 function App() {
-  return <div className="App"></div>;
+  return <div className="App"></div>
 }
 
-export default App;
+export default App
