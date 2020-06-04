@@ -1,3 +1,15 @@
+@mixin for-tablet-below {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin for-mobile-only {
+  @media (max-width: 415px) {
+    @content;
+  }
+}
+
 $primary-color: #fae062;
 $secondary-color: #c2c2c2;
 $defalut-color: #333;
@@ -125,7 +137,7 @@ body {
 }
 
 body {
-  font-family: $default-font;
+  // font-family: $default-font;
   font-weight: 400;
   letter-spacing: -0.025rem;
 

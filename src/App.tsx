@@ -1,8 +1,20 @@
 import React from "react"
 import "./App.scss"
 
-function App() {
-  return <div className="App"></div>
+const App = () => {
+  return (
+    <div className="Login">
+      <h1 className="logo">Todos</h1>
+      <div className="social-login">
+        <button type="button" className="social-login__button social-login__button--goggle">
+          구글 계정으로 로그인
+        </button>
+        <button type="button" className="social-login__button social-login__button--kakao">
+          카카오 계정으로 로그인
+        </button>
+      </div>
+    </div>
+  )
 }
 
 export default App
