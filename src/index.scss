@@ -94,8 +94,7 @@ summary,
 time,
 mark,
 audio,
-video
-{
+video {
   font: inherit;
   font-size: 100%;
 
@@ -123,19 +122,16 @@ header,
 hgroup,
 menu,
 nav,
-section
-{
+section {
   display: block;
 }
 
-html
-{
+html {
   font-size: 62.5%;
 }
 
 html,
-body
-{
+body {
   width: 100%;
   height: 100%;
 }
@@ -154,45 +150,37 @@ body {
 }
 
 ol,
-ul
-{
+ul {
   list-style: none;
 }
 
 blockquote,
-q
-{
+q {
   quotes: none;
 }
 
-blockquote
-{
+blockquote {
   &:before,
-  &:after
-  {
+  &:after {
     content: '';
     content: none;
   }
 }
 
-q
-{
+q {
   &:before,
-  &:after
-  {
+  &:after {
     content: '';
     content: none;
   }
 }
 
-table
-{
+table {
   border-spacing: 0;
   border-collapse: collapse;
 }
 
-a
-{
+a {
   text-decoration: none;
 
   color: inherit;
@@ -201,8 +189,7 @@ a
 input,
 select,
 button,
-textarea
-{
+textarea {
   font-family: inherit;
   font-weight: inherit;
 
@@ -217,14 +204,12 @@ textarea
 
   -webkit-appearance: none;
   text-rendering: inherit;
-  &:focus
-  {
+  &:focus {
     outline: none;
   }
 }
 
-button
-{
+button {
   margin: 0;
   padding: 0;
 
