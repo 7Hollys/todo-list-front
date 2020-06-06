@@ -94,13 +94,14 @@ summary,
 time,
 mark,
 audio,
-video {
+video
+{
   font: inherit;
   font-size: 100%;
 
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
   margin: 0;
   padding: 0;
 
@@ -122,16 +123,19 @@ header,
 hgroup,
 menu,
 nav,
-section {
+section
+{
   display: block;
 }
 
-html {
+html
+{
   font-size: 62.5%;
 }
 
 html,
-body {
+body
+{
   width: 100%;
   height: 100%;
 }
@@ -139,7 +143,8 @@ body {
 body {
   // font-family: $default-font;
   font-weight: 400;
-  letter-spacing: -0.025rem;
+
+  letter-spacing: -.025rem;
 
   color: #000;
   background-color: #fff;
@@ -149,37 +154,45 @@ body {
 }
 
 ol,
-ul {
+ul
+{
   list-style: none;
 }
 
 blockquote,
-q {
+q
+{
   quotes: none;
 }
 
-blockquote {
+blockquote
+{
   &:before,
-  &:after {
-    content: "";
+  &:after
+  {
+    content: '';
     content: none;
   }
 }
 
-q {
+q
+{
   &:before,
-  &:after {
-    content: "";
+  &:after
+  {
+    content: '';
     content: none;
   }
 }
 
-table {
+table
+{
   border-spacing: 0;
   border-collapse: collapse;
 }
 
-a {
+a
+{
   text-decoration: none;
 
   color: inherit;
@@ -188,40 +201,44 @@ a {
 input,
 select,
 button,
-textarea {
+textarea
+{
   font-family: inherit;
   font-weight: inherit;
-  letter-spacing: -0.025rem;
 
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+
+  letter-spacing: -.025rem;
 
   border-radius: 0;
   background-color: transparent;
 
   -webkit-appearance: none;
   text-rendering: inherit;
-  &:focus {
+  &:focus
+  {
     outline: none;
   }
 }
 
-button {
+button
+{
   margin: 0;
   padding: 0;
 
   cursor: pointer;
   -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  letter-spacing: inherit;
 
   border: none;
   background-color: transparent;
 
-  -khtml-user-select: none;
+   -khtml-user-select: none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   -webkit-touch-callout: none;
-  letter-spacing: inherit;
 }
