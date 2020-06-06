@@ -120,5 +120,19 @@ $kakao-icon: "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width
         bottom: 0.3rem;
       }
     }
+    .social-login {
+      left: 2.5rem;
+      right: 2.5rem;
+      &__button {
+        height: 4rem;
+        font-size: 1.6rem;
+        padding: 0.5rem;
+        &:before {
+          width: 3.1rem;
+          height: 3.1rem;
+          background-size: 2.3rem;
+        }
+      }
+    }
   }
 }
