@@ -1,7 +1,9 @@
 import React from "react"
 import "./TodoList.scss"
+import { connect } from "react-redux"
+import { IUser, logOut } from "../../modules/user"
 
-export default () => (
+const TodoList = () => (
   <div className="todo">
     <div className="todo-wrapper">
       <header className="todo-header">
@@ -326,3 +328,12 @@ export default () => (
     </div>
   </div>
 )
+
+export default connect(
+  (user: IUser) => ({
+    email: user.email,
+    name: user.name,
+    profileImage: user.profileImage,
+  }),
+  { logOut }
+)(TodoList)

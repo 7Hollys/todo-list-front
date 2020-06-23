@@ -3,29 +3,36 @@ import { createAction, handleActions } from "redux-actions"
 const SIGN_IN = "user/SIGN_IN"
 const LOG_OUT = "user/LOG_OUT"
 
-export const signIn = createAction(SIGN_IN, (token: string) => token)
+export const signIn = createAction(SIGN_IN, (user: IUser) => user)
 export const logOut = createAction(LOG_OUT)
 
+export interface IUser {
+  email: string
+  name: string
+  profileImage: string
+}
+
 interface IAction {
-  payload: string
+  payload: IUser
 }
 
 const initialState = {
   email: "",
   name: "",
-  picture: "",
-  token: "",
+  profileImage: "",
 }
 
 const user = handleActions(
   {
     [SIGN_IN]: (state, action: IAction) => ({
-      ...state,
-      token: action.payload,
+      email: action.payload.email,
+      name: action.payload.name,
+      profileImage: action.payload.profileImage,
     }),
     [LOG_OUT]: (state) => ({
-      ...state,
-      token: "",
+      email: "",
+      name: "",
+      profileImage: "",
     }),
   },
   initialState
