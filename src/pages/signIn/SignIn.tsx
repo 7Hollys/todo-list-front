@@ -11,15 +11,16 @@ interface Props {
 const SignIn = ({ signIn }: Props) => {
   const history = useHistory()
 
-  const onClickSignIn = (signIn: Function) => {
+  const onClickSignIn = () => {
     signIn({
       email: "abcd@email.com",
       name: "김똘똘",
       profileImage: "../image.jpg",
     })
 
-    history.push("/todo_list")
+    history.replace("/todo_list")
   }
+
   return (
     <div className="Login">
       <h1 className="logo">Todos</h1>
@@ -27,7 +28,7 @@ const SignIn = ({ signIn }: Props) => {
         <button
           type="button"
           className="social-login__button social-login__button--goggle"
-          onClick={() => onClickSignIn(signIn)}
+          onClick={() => onClickSignIn()}
         >
           GOOGLE 계정으로 로그인
         </button>
