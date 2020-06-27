@@ -5,10 +5,17 @@ import { IUser, logOut } from "../../modules/user"
 import { useHistory } from "react-router-dom"
 
 interface Props {
+  email: string
+  name: string
+  profileImage: string
   logOut: Function
 }
 
-const TodoList = ({ logOut }: Props) => {
+interface Store {
+  user: IUser
+}
+
+const TodoList = ({ email, name, profileImage, logOut }: Props) => {
   const history = useHistory()
   const onClickLogout = () => {
     logOut()
@@ -22,13 +29,9 @@ const TodoList = ({ logOut }: Props) => {
         <header className="todo-header">
           <h1 className="todo-header__title">TO-DOs</h1>
           <div className="todo-header__profile">
-            <img
-              src="https://news.korean.go.kr/wp-content/uploads/2014/02/funhangul_140218_04.jpg"
-              className="todo-header__profile-image"
-              alt="Profile"
-            />
+            <img src={profileImage} className="todo-header__profile-image" alt="Profile" />
             <div className="todo-header__nickname">
-              홍길동
+              {name}
               <span className="todo-header__nickname-suffix">님</span>
             </div>
           </div>
@@ -357,10 +360,10 @@ const TodoList = ({ logOut }: Props) => {
 }
 
 export default connect(
-  (user: IUser) => ({
-    email: user.email,
-    name: user.name,
-    profileImage: user.profileImage,
+  (store: Store) => ({
+    email: store.user.email,
+    name: store.user.name,
+    profileImage: store.user.profileImage,
   }),
   { logOut }
 )(TodoList)

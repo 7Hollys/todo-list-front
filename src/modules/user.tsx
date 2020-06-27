@@ -17,18 +17,24 @@ interface IAction {
 }
 
 const initialState = {
-  email: "",
-  name: "",
-  profileImage: "",
+  email: localStorage.getItem("email"),
+  name: localStorage.getItem("name"),
+  profileImage: localStorage.getItem("profileImage"),
 }
 
 const user = handleActions(
   {
-    [SIGN_IN]: (state, action: IAction) => ({
-      email: action.payload.email,
-      name: action.payload.name,
-      profileImage: action.payload.profileImage,
-    }),
+    [SIGN_IN]: (state, action: IAction) => {
+      localStorage.setItem("email", action.payload.email)
+      localStorage.setItem("name", action.payload.name)
+      localStorage.setItem("profileImage", action.payload.profileImage)
+
+      return {
+        email: action.payload.email,
+        name: action.payload.name,
+        profileImage: action.payload.profileImage,
+      }
+    },
     [LOG_OUT]: (state) => ({
       email: "",
       name: "",

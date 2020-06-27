@@ -2,23 +2,14 @@ import React from "react"
 import "./SignIn.scss"
 import { IUser, signIn } from "../../modules/user"
 import { connect } from "react-redux"
-import { useHistory } from "react-router-dom"
 
 interface Props {
   signIn: Function
 }
 
 const SignIn = ({ signIn }: Props) => {
-  const history = useHistory()
-
   const onClickSignIn = () => {
-    signIn({
-      email: "abcd@email.com",
-      name: "김똘똘",
-      profileImage: "../image.jpg",
-    })
-
-    history.replace("/todo_list")
+    window.location.href = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google?redirect_url=${process.env.REACT_APP_API_URL}/auth/token`
   }
 
   return (
