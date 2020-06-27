@@ -41,7 +41,7 @@
     font-size: 0;
 
     position: absolute;
-    top: 50%;
+    top: -50%;
     right: .5rem;
 
     width: 4.2rem;
@@ -55,6 +55,33 @@
     background-repeat: no-repeat;
     background-position: right .67rem center;
     background-size: 2.3rem 2.3rem;
+  }
+  &__profile {
+    position: absolute;
+    top: -50%;
+    left: .5rem;
+
+    display: flex;
+    align-items: center;
+
+    transform: translate(0, -50%);
+  }
+  &__profile-image {
+    width: 4.2rem;
+    height: 4.2rem;
+    margin-right: 1rem;
+
+    border-radius: 50%;
+  }
+  &__nickname {
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+  &__nickname-suffix {
+    font-size: 1.2rem;
+    font-weight: 400;
+
+    margin-left: .4rem;
   }
 }
 
@@ -376,6 +403,9 @@
     &__logout {
       top: -50%;
     }
+    &__profile {
+      top: -50%;
+    }
   }
   .todo-list {
     &__filter {
@@ -488,6 +518,11 @@
 
       background-position: right .65rem center;
       background-size: 2.17rem 2.17rem;
+    }
+    &__profile {
+      top: 3rem;
+
+      transform: translate(0, 0);
     }
   }
   .todo-register {
