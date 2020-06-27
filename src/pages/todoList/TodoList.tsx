@@ -21,6 +21,17 @@ const TodoList = ({ logOut }: Props) => {
       <div className="todo-wrapper">
         <header className="todo-header">
           <h1 className="todo-header__title">TO-DOs</h1>
+          <div className="todo-header__profile">
+            <img
+              src="https://news.korean.go.kr/wp-content/uploads/2014/02/funhangul_140218_04.jpg"
+              className="todo-header__profile-image"
+              alt="Profile"
+            />
+            <div className="todo-header__nickname">
+              홍길동
+              <span className="todo-header__nickname-suffix">님</span>
+            </div>
+          </div>
           <button className="todo-header__logout" onClick={() => onClickLogout()}>
             로그아웃
           </button>
