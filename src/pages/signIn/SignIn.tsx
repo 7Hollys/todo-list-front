@@ -1,13 +1,7 @@
 import React from "react"
 import "./SignIn.scss"
-import { IUser, signIn } from "modules/user"
-import { connect } from "react-redux"
 
-interface Props {
-  signIn: Function
-}
-
-const SignIn = ({ signIn }: Props) => {
+const SignIn = () => {
   const onClickSignIn = () => {
     window.location.href = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google?redirect_url=http://localhost:3000/auth/token`
   }
@@ -31,11 +25,4 @@ const SignIn = ({ signIn }: Props) => {
   )
 }
 
-export default connect(
-  (user: IUser) => ({
-    email: user.email,
-    name: user.name,
-    profileImage: user.profileImage,
-  }),
-  { signIn }
-)(SignIn)
+export default SignIn

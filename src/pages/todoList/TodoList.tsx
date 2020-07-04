@@ -1,21 +1,17 @@
 import React from "react"
 import "./TodoList.scss"
 import { connect } from "react-redux"
-import { IUser, logOut } from "modules/user"
+import { IStore } from "modules/index"
+import { logOut } from "modules/user"
 import { useHistory } from "react-router-dom"
 
-interface Props {
-  email: string
+interface IProps {
   name: string
   profileImage: string
   logOut: Function
 }
 
-interface Store {
-  user: IUser
-}
-
-const TodoList = ({ email, name, profileImage, logOut }: Props) => {
+const TodoList = ({ name, profileImage, logOut }: IProps) => {
   const history = useHistory()
   const onClickLogout = () => {
     logOut()
@@ -360,8 +356,7 @@ const TodoList = ({ email, name, profileImage, logOut }: Props) => {
 }
 
 export default connect(
-  (store: Store) => ({
-    email: store.user.email,
+  (store: IStore) => ({
     name: store.user.name,
     profileImage: store.user.profileImage,
   }),

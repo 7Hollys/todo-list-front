@@ -1,15 +1,11 @@
 import React from "react"
 import { connect } from "react-redux"
 import axios from "axios"
-import { IUser, signIn } from "modules/user"
+import { signIn } from "modules/user"
 import { useHistory } from "react-router-dom"
 
 interface Props {
   signIn: Function
-}
-
-interface Store {
-  user: IUser
 }
 
 const Token = ({ signIn }: Props) => {
@@ -37,11 +33,4 @@ const Token = ({ signIn }: Props) => {
   return <div></div>
 }
 
-export default connect(
-  (store: Store) => ({
-    email: store.user.email,
-    name: store.user.name,
-    profileImage: store.user.profileImage,
-  }),
-  { signIn }
-)(Token)
+export default connect(null, { signIn })(Token)

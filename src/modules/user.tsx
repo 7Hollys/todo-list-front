@@ -3,9 +3,6 @@ import { createAction, handleActions } from "redux-actions"
 const SIGN_IN = "user/SIGN_IN"
 const LOG_OUT = "user/LOG_OUT"
 
-export const signIn = createAction(SIGN_IN, (user: IUser) => user)
-export const logOut = createAction(LOG_OUT)
-
 export interface IUser {
   email: string
   name: string
@@ -15,6 +12,9 @@ export interface IUser {
 interface IAction {
   payload: IUser
 }
+
+export const signIn = createAction(SIGN_IN, (user: IUser) => user)
+export const logOut = createAction(LOG_OUT)
 
 const initialState = {
   email: localStorage.getItem("email"),
@@ -35,11 +35,17 @@ const user = handleActions(
         profileImage: action.payload.profileImage,
       }
     },
-    [LOG_OUT]: (state) => ({
-      email: "",
-      name: "",
-      profileImage: "",
-    }),
+    [LOG_OUT]: (state, action: IAction) => {
+      localStorage.removeItem("email")
+      localStorage.removeItem("name")
+      localStorage.removeItem("profileImage")
+
+      return {
+        email: "",
+        name: "",
+        profileImage: "",
+      }
+    },
   },
   initialState
 )
