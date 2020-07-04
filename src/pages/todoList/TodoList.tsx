@@ -1,7 +1,7 @@
 import React from "react"
 import "./TodoList.scss"
 import { connect } from "react-redux"
-import { IUser, logOut } from "../../modules/user"
+import { IUser, logOut } from "modules/user"
 import { useHistory } from "react-router-dom"
 
 interface Props {

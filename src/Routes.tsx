@@ -12,7 +12,7 @@ const Routes = () => {
         <Route path="/auth/token" component={Token} />
         <Route path="/sign_in" component={SignIn} />
         <Route path="/todo_list" component={TodoList} />
-        <Redirect to="/" />
+        <Redirect to="/todo_list" />
       </Switch>
     </Router>
   )

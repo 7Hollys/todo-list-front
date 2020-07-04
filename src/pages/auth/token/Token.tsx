@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import axios from "axios"
-import { IUser, signIn } from "../../../modules/user"
+import { IUser, signIn } from "modules/user"
 import { useHistory } from "react-router-dom"
 
 interface Props {
@@ -13,13 +13,16 @@ interface Store {
 }
 
 const Token = ({ signIn }: Props) => {
-  let params = new URL(document.location.href).searchParams
-  let token = params.get("token")
+  const params = new URL(document.location.href).searchParams
+  const token = params.get("token")
   const history = useHistory()
 
   axios
-    .get(process.env.REACT_APP_API_URL + "/api/users/me", {
-      headers: { Authorization: `Bearer ${token}`, "content-type": "application/json" },
+    .get(`${process.env.REACT_APP_API_URL}/api/users/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "content-type": "application/json",
+      },
     })
     .then(function (response) {
       signIn({

@@ -1,6 +1,6 @@
 import React from "react"
 import "./SignIn.scss"
-import { IUser, signIn } from "../../modules/user"
+import { IUser, signIn } from "modules/user"
 import { connect } from "react-redux"
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 
 const SignIn = ({ signIn }: Props) => {
   const onClickSignIn = () => {
-    window.location.href = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google?redirect_url=${process.env.REACT_APP_API_URL}/auth/token`
+    window.location.href = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google?redirect_url=http://localhost:3000/auth/token`
   }
 
   return (
