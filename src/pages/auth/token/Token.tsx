@@ -25,6 +25,7 @@ const Token = ({ signIn }: Props) => {
         email: response.data.email,
         name: response.data.name,
         profileImage: response.data.profileImage,
+        token: token,
       })
 
       history.replace("/todo_list")
