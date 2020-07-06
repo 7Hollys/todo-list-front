@@ -13,7 +13,7 @@ interface IProps {
 const Token = ({ token, signIn }: IProps) => {
   const history = useHistory()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const params = new URL(document.location.href).searchParams
     axios
       .get(`${process.env.REACT_APP_API_URL}/api/users/me`, {
