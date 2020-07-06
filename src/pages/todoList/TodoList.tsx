@@ -3,7 +3,6 @@ import "./TodoList.scss"
 import { connect } from "react-redux"
 import { IStore } from "modules/index"
 import { logOut } from "modules/user"
-import { useHistory } from "react-router-dom"
 
 interface IProps {
   name: string
@@ -12,11 +11,8 @@ interface IProps {
 }
 
 const TodoList = ({ name, profileImage, logOut }: IProps) => {
-  const history = useHistory()
   const onClickLogout = () => {
     logOut()
-
-    history.replace("/sign_in")
   }
 
   return (
