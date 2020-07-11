@@ -3,7 +3,7 @@ import "./SignIn.scss"
 
 const SignIn = () => {
   const onClickSignIn = () => {
-    window.location.href = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google?redirect_url=http://localhost:3000/auth/token`
+    window.location.href = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google?redirect_url=${process.env.REACT_APP_APP_URL}/auth/token`
   }
 
   return (

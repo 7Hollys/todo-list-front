@@ -16,8 +16,8 @@ const Routes = ({ token }: IProps) => {
   return (
     <Router>
       <Switch>
-        <PublicRoute path="/auth/token" component={Token} />
-        <PublicRoute path="/sign_in" component={SignIn} />
+        <PublicRoute path="/auth/token" component={Token} token={token} />
+        <PublicRoute path="/sign_in" component={SignIn} token={token} />
         <PrivateRoute path="/todo_list" component={TodoList} token={token} />
         <Redirect to="/todo_list" />
       </Switch>
