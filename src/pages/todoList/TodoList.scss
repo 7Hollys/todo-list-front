@@ -158,6 +158,8 @@
 
       width: 29rem;
 
+      transition: background-image .15s ease;
+
       background-repeat: no-repeat;
       background-position: center;
 
@@ -198,7 +200,6 @@
         height: 4.1rem;
 
         content: '';
-        transition: transform .35s ease-in-out, background-image .35s step-end;
         transform: translate(0, 0);
 
         border: 2px solid $defalut-color;
