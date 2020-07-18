@@ -5,7 +5,7 @@ import { IStore } from "modules/index"
 import { IUser } from "modules/user"
 import { ITodos } from "modules/todos"
 import { logOut } from "modules/user"
-import { categoryAll, categoryDone, itemCheck } from "modules/todos"
+import { categoryAll, categoryDone, itemCheck, etcOpen } from "modules/todos"
 import { useHistory } from "react-router-dom"
 
 interface IProps {
@@ -16,9 +16,10 @@ interface IProps {
   categoryAll: Function
   categoryDone: Function
   itemCheck: Function
+  etcOpen: Function
 }
 
-const TodoList = ({ user, todos, logOut, categoryAll, categoryDone, itemCheck }: IProps) => {
+const TodoList = ({ user, todos, logOut, categoryAll, categoryDone, itemCheck, etcOpen }: IProps) => {
   const history = useHistory()
   const onClickLogout = () => {
     logOut()
@@ -36,6 +37,10 @@ const TodoList = ({ user, todos, logOut, categoryAll, categoryDone, itemCheck }:
 
   const onClickItemCheck = (id: string) => {
     itemCheck({ id })
+  }
+
+  const onClickEtcOpen = (id: string | null = null) => {
+    etcOpen({ id })
   }
 
   return (
@@ -95,125 +100,63 @@ const TodoList = ({ user, todos, logOut, categoryAll, categoryDone, itemCheck }:
             </button>
           </nav>
           <section className="todo-list__section">
-            {todos.todos.map((item: any) => {
-              if (todos.category === "all") {
-                return (
-                  <article key={item.id} className="todo-list__article">
-                    <div className="todo-list__slider">
-                      <div className={item.isChecked ? "todo-list__item todo-list__item--checked" : "todo-list__item"}>
-                        <div className="todo-list__item-element todo-list__item-element--status">
-                          <input
-                            id={`id${item.id}`}
-                            type="checkbox"
-                            className="todo-list__item-checkbox"
-                            onClick={() => onClickItemCheck(item.id)}
-                            defaultChecked={item.isChecked ? true : false}
-                          ></input>
-                          <label htmlFor={`id${item.id}`} className="todo-list__item-checkbox-label"></label>
-                        </div>
-                        <div className="todo-list__item-element todo-list__item-element--content">
-                          <div className="todo-list__item-prefix">{item.createdAt}</div>
-                          <h2 className="todo-list__item-title">{item.contents}</h2>
-                        </div>
-                        <div className="todo-list__item-element todo-list__item-element--etc">
-                          {!item.etcOpen ? (
-                            <button className="todo-list__item-button todo-list__item-button--etc">열기</button>
-                          ) : (
-                            <button className="todo-list__item-button todo-list__item-button--close">닫기</button>
-                          )}
-                        </div>
+            {todos.todos
+              .filter((item: any) => {
+                if (todos.category === "all") {
+                  return true
+                }
+
+                if (todos.category === "done" && item.isChecked) {
+                  return true
+                }
+
+                return false
+              })
+              .map((item: any) => (
+                <article key={item.id} className="todo-list__article">
+                  <div
+                    className={`${item.id === todos.etcActiveId ? "todo-list__slider--active" : ""} todo-list__slider`}
+                  >
+                    <div className={item.isChecked ? "todo-list__item todo-list__item--checked" : "todo-list__item"}>
+                      <div className="todo-list__item-element todo-list__item-element--status">
+                        <input
+                          id={`id${item.id}`}
+                          type="checkbox"
+                          className="todo-list__item-checkbox"
+                          onClick={() => onClickItemCheck(item.id)}
+                          defaultChecked={item.isChecked ? true : false}
+                        ></input>
+                        <label htmlFor={`id${item.id}`} className="todo-list__item-checkbox-label"></label>
                       </div>
-                      <div className="todo-list__etc">
-                        <button className="todo-list__etc-button todo-list__etc-button--edit">수정</button>
-                        <button className="todo-list__etc-button todo-list__etc-button--delete">삭제</button>
+                      <div className="todo-list__item-element todo-list__item-element--content">
+                        <div className="todo-list__item-prefix">{item.createdAt}</div>
+                        <h2 className="todo-list__item-title">{item.contents}</h2>
+                      </div>
+                      <div className="todo-list__item-element todo-list__item-element--etc">
+                        {item.id === todos.etcActiveId ? (
+                          <button
+                            className="todo-list__item-button todo-list__item-button--close"
+                            onClick={() => onClickEtcOpen()}
+                          >
+                            닫기
+                          </button>
+                        ) : (
+                          <button
+                            className="todo-list__item-button todo-list__item-button--etc"
+                            onClick={() => onClickEtcOpen(item.id)}
+                          >
+                            열기
+                          </button>
+                        )}
                       </div>
                     </div>
-                  </article>
-                )
-              } else {
-                if (item.isChecked) {
-                  return (
-                    <article key={item.id} className="todo-list__article">
-                      <div className="todo-list__slider">
-                        <div
-                          className={item.isChecked ? "todo-list__item todo-list__item--checked" : "todo-list__item"}
-                        >
-                          <div className="todo-list__item-element todo-list__item-element--status">
-                            <input
-                              id={`id${item.id}`}
-                              type="checkbox"
-                              className="todo-list__item-checkbox"
-                              onClick={() => onClickItemCheck(item.id)}
-                              defaultChecked={item.isChecked ? true : false}
-                            ></input>
-                            <label htmlFor={`id${item.id}`} className="todo-list__item-checkbox-label"></label>
-                          </div>
-                          <div className="todo-list__item-element todo-list__item-element--content">
-                            <div className="todo-list__item-prefix">{item.createdAt}</div>
-                            <h2 className="todo-list__item-title">{item.contents}</h2>
-                          </div>
-                          <div className="todo-list__item-element todo-list__item-element--etc">
-                            {!item.etcOpen ? (
-                              <button className="todo-list__item-button todo-list__item-button--etc">열기</button>
-                            ) : (
-                              <button className="todo-list__item-button todo-list__item-button--close">닫기</button>
-                            )}
-                          </div>
-                        </div>
-                        <div className="todo-list__etc">
-                          <button className="todo-list__etc-button todo-list__etc-button--edit">수정</button>
-                          <button className="todo-list__etc-button todo-list__etc-button--delete">삭제</button>
-                        </div>
-                      </div>
-                    </article>
-                  )
-                }
-              }
-              return null
-            })}
-
-            <article className="todo-list__article">
-              <div className="todo-list__slider todo-list__slider--active">
-                <div className="todo-list__item todo-list__item--checked">
-                  <div className="todo-list__item-element todo-list__item-element--status">
-                    <input id="id1" type="checkbox" className="todo-list__item-checkbox"></input>
-                    <label htmlFor="id1" className="todo-list__item-checkbox-label"></label>
+                    <div className="todo-list__etc">
+                      <button className="todo-list__etc-button todo-list__etc-button--edit">수정</button>
+                      <button className="todo-list__etc-button todo-list__etc-button--delete">삭제</button>
+                    </div>
                   </div>
-                  <div className="todo-list__item-element todo-list__item-element--content">
-                    <div className="todo-list__item-prefix">3분 전</div>
-                    <h2 className="todo-list__item-title">맑은고딕</h2>
-                  </div>
-                  <div className="todo-list__item-element todo-list__item-element--etc">
-                    <button className="todo-list__item-button todo-list__item-button--close">닫기</button>
-                  </div>
-                </div>
-                <div className="todo-list__etc">
-                  <button className="todo-list__etc-button todo-list__etc-button--edit">수정</button>
-                  <button className="todo-list__etc-button todo-list__etc-button--delete">삭제</button>
-                </div>
-              </div>
-            </article>
-            <article className="todo-list__article">
-              <div className="todo-list__slider">
-                <div className="todo-list__item todo-list__item--checked">
-                  <div className="todo-list__item-element todo-list__item-element--status">
-                    <input id="id2" type="checkbox" className="todo-list__item-checkbox"></input>
-                    <label htmlFor="id2" className="todo-list__item-checkbox-label"></label>
-                  </div>
-                  <div className="todo-list__item-element todo-list__item-element--content">
-                    <div className="todo-list__item-prefix">3분 전</div>
-                    <h2 className="todo-list__item-title">맑은고딕</h2>
-                  </div>
-                  <div className="todo-list__item-element todo-list__item-element--etc">
-                    <button className="todo-list__item-button todo-list__item-button--etc"></button>
-                  </div>
-                </div>
-                <div className="todo-list__etc">
-                  <button className="todo-list__etc-button todo-list__etc-button--edit">수정</button>
-                  <button className="todo-list__etc-button todo-list__etc-button--delete">삭제</button>
-                </div>
-              </div>
-            </article>
+                </article>
+              ))}
           </section>
         </section>
       </div>
@@ -226,5 +169,5 @@ export default connect(
     user: store.user,
     todos: store.todos,
   }),
-  { logOut, categoryAll, categoryDone, itemCheck }
+  { logOut, categoryAll, categoryDone, itemCheck, etcOpen }
 )(TodoList)

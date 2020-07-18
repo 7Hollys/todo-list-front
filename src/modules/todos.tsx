@@ -4,44 +4,30 @@ const CATEGORY_ALL = "todos/CATEGORY_ALL"
 const CATEGORY_DONE = "todos/CATEGORY_DONE"
 
 const ITEM_CHECK = "todos/ITEM_CHECK"
+const ETC_OPEN = "todos/ETC_OPEN"
 
 export const categoryAll = createAction(CATEGORY_ALL)
 export const categoryDone = createAction(CATEGORY_DONE)
 export const itemCheck = createAction(ITEM_CHECK)
+export const etcOpen = createAction(ETC_OPEN)
 
 export interface ITodos {
   category: string
+  etcActiveId: null | number
   todos: any[]
 }
 
 interface IItemCheckAction {
   payload: any
 }
+interface IEtcOpen {
+  payload: any
+}
 
 const initialState: ITodos = {
   category: "all",
-  todos: [
-    {
-      contents: "string",
-      createdAt: "2020-07-15T11:52:43.803Z",
-      deletedAt: "2020-07-15T11:52:43.803Z",
-      id: 0,
-      isChecked: true,
-      sequence: 0,
-      updatedAt: "2020-07-15T11:52:43.803Z",
-      userId: "string",
-    },
-    {
-      contents: "string",
-      createdAt: "2020-07-15T11:52:43.803Z",
-      deletedAt: "2020-07-15T11:52:43.803Z",
-      id: 1,
-      isChecked: false,
-      sequence: 1,
-      updatedAt: "2020-07-15T11:52:43.803Z",
-      userId: "string",
-    },
-  ],
+  etcActiveId: null,
+  todos: [],
 }
 
 const todos = handleActions(
@@ -49,10 +35,12 @@ const todos = handleActions(
     [CATEGORY_ALL]: (state) => ({
       ...state,
       category: "all",
+      etcActiveId: null,
     }),
     [CATEGORY_DONE]: (state) => ({
       ...state,
       category: "done",
+      etcActiveId: null,
     }),
     [ITEM_CHECK]: (state: ITodos, action: IItemCheckAction) => ({
       ...state,
@@ -65,6 +53,10 @@ const todos = handleActions(
         }
         return todo
       }),
+    }),
+    [ETC_OPEN]: (state, action: IEtcOpen) => ({
+      ...state,
+      etcActiveId: action.payload.id,
     }),
   },
   initialState
