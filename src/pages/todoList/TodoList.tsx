@@ -2,26 +2,23 @@ import React from "react"
 import "./TodoList.scss"
 import { connect } from "react-redux"
 import { IStore } from "modules/index"
+import { IUser } from "modules/user"
+import { ITodos } from "modules/todos"
 import { logOut } from "modules/user"
 import { categoryAll, categoryDone, itemCheck } from "modules/todos"
 import { useHistory } from "react-router-dom"
 
 interface IProps {
-  name: string
-  profileImage: string
-  logOut: Function
+  user: IUser
+  todos: ITodos
 
-  category: boolean
+  logOut: Function
   categoryAll: Function
   categoryDone: Function
-
   itemCheck: Function
-
-  items: []
 }
 
-const TodoList = ({ name, profileImage, logOut, category, categoryAll, categoryDone, itemCheck, items }: IProps) => {
-  console.log(items)
+const TodoList = ({ user, todos, logOut, categoryAll, categoryDone, itemCheck }: IProps) => {
   const history = useHistory()
   const onClickLogout = () => {
     logOut()
@@ -37,8 +34,8 @@ const TodoList = ({ name, profileImage, logOut, category, categoryAll, categoryD
     categoryDone()
   }
 
-  const onClickItemCheck = () => {
-    itemCheck()
+  const onClickItemCheck = (id: string) => {
+    itemCheck({ id })
   }
 
   return (
@@ -47,9 +44,9 @@ const TodoList = ({ name, profileImage, logOut, category, categoryAll, categoryD
         <header className="todo-header">
           <h1 className="todo-header__title">TO-DOs</h1>
           <div className="todo-header__profile">
-            <img src={profileImage} className="todo-header__profile-image" alt="Profile" />
+            <img src={user.profileImage} className="todo-header__profile-image" alt="Profile" />
             <div className="todo-header__nickname">
-              {name}
+              {user.name}
               <span className="todo-header__nickname-suffix">님</span>
             </div>
           </div>
@@ -69,7 +66,7 @@ const TodoList = ({ name, profileImage, logOut, category, categoryAll, categoryD
           <nav className="todo-list__filter">
             <button
               className={
-                category
+                todos.category === "all"
                   ? "todo-list__filter-button todo-list__filter-button--left todo-list__filter-button--active"
                   : "todo-list__filter-button todo-list__filter-button--left"
               }
@@ -80,7 +77,7 @@ const TodoList = ({ name, profileImage, logOut, category, categoryAll, categoryD
             <div className="todo-list__filter-element">
               <div
                 className={
-                  category
+                  todos.category === "all"
                     ? "todo-list__filter-status todo-list__filter-status--all"
                     : "todo-list__filter-status todo-list__filter-status--done"
                 }
@@ -88,7 +85,7 @@ const TodoList = ({ name, profileImage, logOut, category, categoryAll, categoryD
             </div>
             <button
               className={
-                !category
+                todos.category === "done"
                   ? "todo-list__filter-button todo-list__filter-button--right todo-list__filter-button--active"
                   : "todo-list__filter-button todo-list__filter-button--right"
               }
@@ -98,24 +95,24 @@ const TodoList = ({ name, profileImage, logOut, category, categoryAll, categoryD
             </button>
           </nav>
           <section className="todo-list__section">
-            {items.map((item: any) => {
-              if (category) {
+            {todos.todos.map((item: any) => {
+              if (todos.category === "all") {
                 return (
-                  <article key={item.contents} className="todo-list__article">
+                  <article key={item.id} className="todo-list__article">
                     <div className="todo-list__slider">
                       <div className={item.isChecked ? "todo-list__item todo-list__item--checked" : "todo-list__item"}>
                         <div className="todo-list__item-element todo-list__item-element--status">
                           <input
-                            id={`id${item.index}`}
+                            id={`id${item.id}`}
                             type="checkbox"
                             className="todo-list__item-checkbox"
-                            onClick={() => onClickItemCheck()}
+                            onClick={() => onClickItemCheck(item.id)}
                             defaultChecked={item.isChecked ? true : false}
                           ></input>
-                          <label htmlFor={`id${item.index}`} className="todo-list__item-checkbox-label"></label>
+                          <label htmlFor={`id${item.id}`} className="todo-list__item-checkbox-label"></label>
                         </div>
                         <div className="todo-list__item-element todo-list__item-element--content">
-                          <div className="todo-list__item-prefix">{item.createdDatetime}</div>
+                          <div className="todo-list__item-prefix">{item.createdAt}</div>
                           <h2 className="todo-list__item-title">{item.contents}</h2>
                         </div>
                         <div className="todo-list__item-element todo-list__item-element--etc">
@@ -136,23 +133,23 @@ const TodoList = ({ name, profileImage, logOut, category, categoryAll, categoryD
               } else {
                 if (item.isChecked) {
                   return (
-                    <article key={item.contents} className="todo-list__article">
+                    <article key={item.id} className="todo-list__article">
                       <div className="todo-list__slider">
                         <div
                           className={item.isChecked ? "todo-list__item todo-list__item--checked" : "todo-list__item"}
                         >
                           <div className="todo-list__item-element todo-list__item-element--status">
                             <input
-                              id={`id${item.index}`}
+                              id={`id${item.id}`}
                               type="checkbox"
                               className="todo-list__item-checkbox"
-                              onClick={() => onClickItemCheck()}
+                              onClick={() => onClickItemCheck(item.id)}
                               defaultChecked={item.isChecked ? true : false}
                             ></input>
-                            <label htmlFor={`id${item.index}`} className="todo-list__item-checkbox-label"></label>
+                            <label htmlFor={`id${item.id}`} className="todo-list__item-checkbox-label"></label>
                           </div>
                           <div className="todo-list__item-element todo-list__item-element--content">
-                            <div className="todo-list__item-prefix">{item.createdDatetime}</div>
+                            <div className="todo-list__item-prefix">{item.createdAt}</div>
                             <h2 className="todo-list__item-title">{item.contents}</h2>
                           </div>
                           <div className="todo-list__item-element todo-list__item-element--etc">
@@ -172,6 +169,7 @@ const TodoList = ({ name, profileImage, logOut, category, categoryAll, categoryD
                   )
                 }
               }
+              return null
             })}
 
             <article className="todo-list__article">
@@ -225,10 +223,8 @@ const TodoList = ({ name, profileImage, logOut, category, categoryAll, categoryD
 
 export default connect(
   (store: IStore) => ({
-    name: store.user.name,
-    profileImage: store.user.profileImage,
-    category: store.todos.category,
-    items: store.todos.items,
+    user: store.user,
+    todos: store.todos,
   }),
   { logOut, categoryAll, categoryDone, itemCheck }
 )(TodoList)

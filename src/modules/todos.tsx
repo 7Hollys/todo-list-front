@@ -5,51 +5,67 @@ const CATEGORY_DONE = "todos/CATEGORY_DONE"
 
 const ITEM_CHECK = "todos/ITEM_CHECK"
 
-export interface ITodos {
-  category: boolean
-  items: []
-  index: Number
-}
-
-interface IAction {
-  payload: ITodos
-}
-
 export const categoryAll = createAction(CATEGORY_ALL)
 export const categoryDone = createAction(CATEGORY_DONE)
-
 export const itemCheck = createAction(ITEM_CHECK)
 
-const initialState = {
-  category: true,
-  items: [
+export interface ITodos {
+  category: string
+  todos: any[]
+}
+
+interface IItemCheckAction {
+  payload: any
+}
+
+const initialState: ITodos = {
+  category: "all",
+  todos: [
     {
+      contents: "string",
+      createdAt: "2020-07-15T11:52:43.803Z",
+      deletedAt: "2020-07-15T11:52:43.803Z",
+      id: 0,
       isChecked: true,
-      index: 1,
-      contents: "1",
-      createdDatetime: "1",
-      etcOpen: false,
+      sequence: 0,
+      updatedAt: "2020-07-15T11:52:43.803Z",
+      userId: "string",
     },
     {
+      contents: "string",
+      createdAt: "2020-07-15T11:52:43.803Z",
+      deletedAt: "2020-07-15T11:52:43.803Z",
+      id: 1,
       isChecked: false,
-      index: 2,
-      contents: "2",
-      createdDatetime: "2",
-      etcOpen: false,
+      sequence: 1,
+      updatedAt: "2020-07-15T11:52:43.803Z",
+      userId: "string",
     },
   ],
 }
 
 const todos = handleActions(
   {
-    [CATEGORY_ALL]: (state, action: IAction) => ({ ...state, category: true }),
-    [CATEGORY_DONE]: (state, action: IAction) => ({ ...state, category: false }),
-
-    [ITEM_CHECK]: (state, action: IAction) => {
-      return {
-        ...state,
-      }
-    },
+    [CATEGORY_ALL]: (state) => ({
+      ...state,
+      category: "all",
+    }),
+    [CATEGORY_DONE]: (state) => ({
+      ...state,
+      category: "done",
+    }),
+    [ITEM_CHECK]: (state: ITodos, action: IItemCheckAction) => ({
+      ...state,
+      todos: state.todos.map((todo: any) => {
+        if (todo.id === action.payload.id) {
+          return {
+            ...todo,
+            isChecked: !todo.isChecked,
+          }
+        }
+        return todo
+      }),
+    }),
   },
   initialState
 )
