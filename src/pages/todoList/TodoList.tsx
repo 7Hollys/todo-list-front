@@ -1,11 +1,19 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import "./TodoList.scss"
 import { connect } from "react-redux"
 import { IStore } from "modules/index"
-import { IUser } from "modules/user"
+import { IUser, logOut } from "modules/user"
 import { ITodos } from "modules/todos"
-import { logOut } from "modules/user"
-import { categoryAll, categoryDone, itemCheck, etcOpen } from "modules/todos"
+import {
+  categoryAll,
+  categoryDone,
+  itemUpdate,
+  postTodoItem,
+  updateTodoItem,
+  deleteTodoItem,
+  etcOpen,
+  getTodoItems,
+} from "modules/todos"
 import { useHistory } from "react-router-dom"
 
 interface IProps {
@@ -15,11 +23,27 @@ interface IProps {
   logOut: Function
   categoryAll: Function
   categoryDone: Function
-  itemCheck: Function
+  postTodoItem: Function
+  itemUpdate: Function
+  updateTodoItem: Function
+  deleteTodoItem: Function
   etcOpen: Function
+  todoItems: Function
+  getTodoItems: Function
 }
 
-const TodoList = ({ user, todos, logOut, categoryAll, categoryDone, itemCheck, etcOpen }: IProps) => {
+const TodoList = ({
+  user,
+  todos,
+  logOut,
+  categoryAll,
+  categoryDone,
+  postTodoItem,
+  updateTodoItem,
+  deleteTodoItem,
+  etcOpen,
+  getTodoItems,
+}: IProps) => {
   const history = useHistory()
   const onClickLogout = () => {
     logOut()
@@ -35,13 +59,34 @@ const TodoList = ({ user, todos, logOut, categoryAll, categoryDone, itemCheck, e
     categoryDone()
   }
 
-  const onClickItemCheck = (id: string) => {
-    itemCheck({ id })
+  const onSubmitPostItem = (event: any) => {
+    event.preventDefault()
+    postTodoItem(user.token, inputText)
+    setInputText("")
+  }
+
+  const onClickUpdateItem = (item: any) => {
+    item.isChecked = !item.isChecked
+    updateTodoItem(user.token, item)
+  }
+
+  const onClickDeleteItem = (item: any) => {
+    deleteTodoItem(user.token, item)
   }
 
   const onClickEtcOpen = (id: string | null = null) => {
     etcOpen({ id })
   }
+
+  const [inputText, setInputText] = useState("")
+
+  const onChangeInput = (event: any) => {
+    setInputText(event.target.value)
+  }
+
+  useEffect(() => {
+    getTodoItems(user.token)
+  }, [getTodoItems])
 
   return (
     <div className="todo">
@@ -60,8 +105,14 @@ const TodoList = ({ user, todos, logOut, categoryAll, categoryDone, itemCheck, e
           </button>
         </header>
         <section className="todo-register">
-          <form>
-            <input className="todo-register__input" type="text" placeholder="NEW TODO"></input>
+          <form onSubmit={onSubmitPostItem}>
+            <input
+              className="todo-register__input"
+              type="text"
+              placeholder="NEW TODO"
+              value={inputText}
+              onChange={(value) => onChangeInput(value)}
+            ></input>
             <button className="todo-register__button" type="submit">
               등록
             </button>
@@ -123,9 +174,9 @@ const TodoList = ({ user, todos, logOut, categoryAll, categoryDone, itemCheck, e
                           id={`id${item.id}`}
                           type="checkbox"
                           className="todo-list__item-checkbox"
-                          onClick={() => onClickItemCheck(item.id)}
+                          onClick={() => onClickUpdateItem(item)}
                           defaultChecked={item.isChecked ? true : false}
-                        ></input>
+                        />
                         <label htmlFor={`id${item.id}`} className="todo-list__item-checkbox-label"></label>
                       </div>
                       <div className="todo-list__item-element todo-list__item-element--content">
@@ -152,7 +203,12 @@ const TodoList = ({ user, todos, logOut, categoryAll, categoryDone, itemCheck, e
                     </div>
                     <div className="todo-list__etc">
                       <button className="todo-list__etc-button todo-list__etc-button--edit">수정</button>
-                      <button className="todo-list__etc-button todo-list__etc-button--delete">삭제</button>
+                      <button
+                        className="todo-list__etc-button todo-list__etc-button--delete"
+                        onClick={() => onClickDeleteItem(item)}
+                      >
+                        삭제
+                      </button>
                     </div>
                   </div>
                 </article>
@@ -169,5 +225,5 @@ export default connect(
     user: store.user,
     todos: store.todos,
   }),
-  { logOut, categoryAll, categoryDone, itemCheck, etcOpen }
+  { logOut, categoryAll, categoryDone, itemUpdate, postTodoItem, updateTodoItem, deleteTodoItem, etcOpen, getTodoItems }
 )(TodoList)
