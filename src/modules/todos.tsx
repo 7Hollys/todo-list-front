@@ -56,13 +56,13 @@ const initialState = {
 
 const todos = handleActions(
   {
-    [CATEGORY_ALL]: (state, action: ITodoCategoryAction) => ({ …state, category: true }),
-    [CATEGORY_DONE]: (state, action: ITodoCategoryAction) => ({ …state, category: false }),
+    [CATEGORY_ALL]: (state, action: ITodoCategoryAction) => ({ ...state, category: true }),
+    [CATEGORY_DONE]: (state, action: ITodoCategoryAction) => ({ ...state, category: false }),
 
     [ITEM_CHECK]: (state, action: any) => {
       console.log(state)
       return {
-        …state,
+        ...state,
       }
     },
   },

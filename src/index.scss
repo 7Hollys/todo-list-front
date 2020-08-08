@@ -115,12 +115,20 @@ section {
 html {
   font-size: 62.5%;
 
+  display: flex;
+
+  width: 100%;
+  min-height: 100%;
+
   -webkit-text-size-adjust: 100%;
 }
 
 body {
   font-family: $default-font;
   font-weight: 400;
+
+  display: flex;
+  flex: 1;
 
   letter-spacing: -.025rem;
 
@@ -208,4 +216,10 @@ button {
   -khtml-user-select: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
+}
+
+#root,
+.app {
+  display: flex;
+  flex: 1;
 }

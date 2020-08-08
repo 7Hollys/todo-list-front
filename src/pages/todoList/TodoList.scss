@@ -2,28 +2,31 @@
 
 .todo {
   display: flex;
-  justify-content: center;
+  flex: 1;
 
   &__wrapper {
     display: flex;
-    align-content: flex-start;
-    flex-wrap: wrap;
+    flex: 0 0 81.25%;
 
-    width: 81.25%;
     min-width: 41.4rem;
     max-width: 67.8rem;
-    padding: 36.7rem 0 0 0;
+    margin: 0 0 2rem 0;
+    padding: 36.7rem 0 5rem 0;
 
+    border-radius: 0 0 5rem 5rem;
     background-color: #fff;
+    box-shadow: 0 -1px 3rem rgba(0, 0, 0, .078);
   }
 }
 
 .todo-header {
   position: fixed;
+  z-index: 1;
   top: 0;
   left: 0;
 
   display: flex;
+  overflow: hidden;
   justify-content: center;
 
   width: 100%;
@@ -54,7 +57,7 @@
 
   box-sizing: content-box;
   height: 9.3rem;
-  margin: 9rem 0 0 0;
+  padding: 9rem 0 0 0;
 
   &__title {
     font-family: 'Bellota', -apple-system, sans-serif;
@@ -71,13 +74,12 @@
   }
   &__profile {
     position: absolute;
-    top: 50%;
+    z-index: 1;
+    top: 2.7rem;
     left: .5rem;
 
     display: flex;
     align-items: center;
-
-    transform: translate(0, -50%);
 
     &-image {
       flex: 0 0 4.2rem;
@@ -109,13 +111,12 @@
       font-size: 0;
 
       position: absolute;
-      top: 50%;
+      z-index: 1;
+      top: 2.7rem;
       right: .5rem;
 
       width: 4.2rem;
       height: 4.2rem;
-
-      transform: translate(0, -50%);
 
       border-radius: 50%;
       background-color: $defalut-color;
@@ -148,6 +149,7 @@
 
     border-radius: 2.75rem;
     background-color: #fff;
+    box-shadow: 0 -1px 3rem rgba(0, 0, 0, .078);
 
     &::placeholder {
       color: $secondary-color;
@@ -157,6 +159,7 @@
     font-size: 0;
 
     position: absolute;
+    z-index: 1;
     top: 50%;
     right: .5rem;
 
@@ -176,6 +179,8 @@
 }
 
 .todo-filter {
+  position: relative;
+
   display: flex;
   align-items: center;
   flex: 1 1 100%;
@@ -199,10 +204,10 @@
     background-position: center;
     background-size: 2.4rem auto;
 
-    &:first-child {
+    &--all {
       background-image: url('/images/ic_all_list.svg');
     }
-    &:last-child {
+    &--checked {
       background-image: url('/images/ic_checked_list.svg');
     }
   }
@@ -218,6 +223,7 @@
 
     &::after {
       position: absolute;
+      z-index: 1;
       top: -.4rem;
       left: -.2rem;
 
@@ -226,7 +232,6 @@
       height: 4.1rem;
 
       content: '';
-      transition: transform .35s ease-in-out, background-image .35s step-end;
       transform: translate(0, 0);
 
       border: 2px solid $defalut-color;
@@ -237,16 +242,27 @@
       background-position: center center;
     }
   }
+  &__shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: 5rem 5rem 0 0;
+    box-shadow: 0 -1px 3rem rgba(0, 0, 0, .078);
+  }
   &--all {
     #{$todo-filter}__button {
-      &:first-child {
+      &--all {
         background-image: url('/images/ic_all_list_active.svg');
       }
     }
   }
   &--done {
     #{$todo-filter}__button {
-      &:last-child {
+      &--checked {
         background-image: url('/images/ic_checked_list_active.svg');
       }
     }
@@ -258,10 +274,285 @@
   }
 }
 
+.todo-list {
+  display: flex;
+  align-content: flex-start;
+  flex: 1;
+  flex-wrap: wrap;
+
+  background-color: #fff;
+
+  &:empty {
+    background-image: url(/images/ic_not_plane.svg);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 23.7rem, auto;
+  }
+}
+
+.todo-item {
+  display: flex;
+  overflow: hidden;
+  flex: 0 0 auto;
+
+  width: 100%;
+  height: 10rem;
+
+  $todo-item: &;
+
+  &__slider {
+    display: flex;
+    flex: 1;
+    flex-wrap: nowrap;
+
+    transition: transform .35s ease-in-out;
+    transform: translate(0, 0);
+
+    &--active {
+      transform: translate(-17rem, 0);
+
+      #{$todo-item}__main {
+        background-color: #f1f2f3;
+
+        &-title {
+          color: #c2c2c2;
+
+          -webkit-text-decoration-line: line-through;
+                  text-decoration-line: line-through;
+        }
+      }
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex: 0 0 100%;
+
+    $todo-item__main: &;
+
+    &-wrapper {
+      &--status {
+        display: flex;
+        align-items: center;
+        flex: 0 0 8.5rem;
+        justify-content: center;
+      }
+      &--content {
+        display: flex;
+        flex: 1 1;
+        flex-direction: column;
+        justify-content: center;
+      }
+      &--etc {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 10rem;
+      }
+    }
+
+    &-checkbox {
+      display: none;
+
+      &:checked {
+        & + #{$todo-item__main}-label::before {
+          position: absolute;
+          top: -.2rem;
+          left: .4rem;
+
+          display: inline-block;
+
+          width: 3.2rem;
+          height: 2.5rem;
+
+          content: '';
+
+          background-image: url(/images/ic_checked.svg);
+          background-repeat: no-repeat;
+          background-position: 50%;
+          background-size: 100% 100%;
+        }
+      }
+    }
+    &-label {
+      position: relative;
+
+      width: 3.5rem;
+      height: 3.5rem;
+
+      cursor: pointer;
+
+      border: 2px solid #333;
+      border-radius: 50%;
+      background-color: #fae062;
+    }
+    &-title {
+      font-size: 2.7rem;
+
+      margin: .5rem 0 0;
+
+      letter-spacing: -1.35px;
+
+      color: #333;
+    }
+    &-prefix {
+      font-size: 2.1rem;
+
+      letter-spacing: -1.05px;
+
+      color: #c2c2c2;
+    }
+    &-button {
+      font-size: 0;
+
+      width: 4.2rem;
+      height: 4.2rem;
+
+      border-radius: 50%;
+      background-color: #f1f2f3;
+      background-repeat: no-repeat;
+      background-position: 50%;
+
+      &--etc {
+        background-image: url(/images/ic_etc.svg);
+        background-size: 2.5rem auto;
+      }
+      &--close {
+        background-image: url(/images/ic_close.svg);
+        background-size: 2.06rem 2.06rem;
+      }
+    }
+  }
+  &__etc {
+    display: flex;
+    align-items: center;
+    flex: 0 0 17rem;
+    justify-content: center;
+
+    background-color: $primary-color;
+
+    &-button {
+      font-size: 0;
+
+      width: 4.2rem;
+      height: 4.2rem;
+
+      border: 2px solid #333;
+      border-radius: 50%;
+
+      &:not(:first-child) {
+        margin: 0 0 0 2.8rem;
+      }
+      &--edit {
+        background-image: url(/images/ic_edit.svg);
+        background-repeat: no-repeat;
+        background-position: 50%;
+        background-size: auto 1.9rem;
+      }
+      &--delete {
+        background-image: url(/images/ic_delete.svg);
+        background-repeat: no-repeat;
+        background-position: 50%;
+        background-size: auto 1.9rem;
+      }
+    }
+  }
+}
+
+.todo-modifier {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  pointer-events: all;
+
+  &__wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 50rem;
+
+    transform: translate(-50%, -50%);
+  }
+
+  &__input {
+    font-family: $default-font;
+    font-size: 2rem;
+
+    flex: 1 1 100%;
+
+    height: 5rem;
+    margin: 0 2rem;
+    padding: 1.4rem 5.4rem 1.4rem 2.5rem;
+
+    letter-spacing: -1px;
+
+    color: #707070;
+    border-radius: 2.5rem;
+    background-color: #fff;
+    box-shadow: 0 -1px 3rem rgba(0, 0, 0, .078);
+
+    &::placeholder {
+      color: $secondary-color;
+    }
+  }
+
+  &__etc {
+    display: flex;
+    justify-content: center;
+
+    padding: 2rem 0 0 0;
+  }
+  &__button {
+    font-size: 0;
+
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &:not(:first-child) {
+      margin: 0 0 0 1.4rem;
+    }
+    &--ok {
+      width: 2.5rem;
+      height: 1.9rem;
+
+      background-image: url('/images/ic_checked.svg');
+      background-size: 2.5rem, 1.9rem;
+    }
+    &--cancel {
+      width: 2rem;
+      height: 2rem;
+
+      background-image: url('/images/ic_close-active.svg');
+      background-size: 2rem;
+    }
+  }
+}
+
+.todo__bg {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+
+  &--modal {
+    filter: blur(1rem);
+  }
+}
+
 @include for-tablet-below {
   .todo {
     &__wrapper {
-      padding: 36rem 0 0 0;
+      padding: 36rem 0 5rem 0;
     }
   }
 
@@ -271,13 +562,8 @@
 
   .todo-logo {
     margin: 0;
-    padding: 9rem 0 0 0;
 
     &__profile {
-      top: 2.7rem;
-
-      transform: translate(0, 0);
-
       &-image {
         flex: 0 0 4rem;
 
@@ -287,12 +573,8 @@
 
     &__button {
       &--logout {
-        top: 2.7rem;
-
         width: 4rem;
         height: 4rem;
-
-        transform: translate(0, 0);
       }
     }
   }
@@ -324,11 +606,42 @@
       }
     }
   }
+
+  .todo-item {
+    height: 9rem;
+
+    .todo-item__main {
+      &-label {
+        width: 3.3rem;
+        height: 3.3rem;
+      }
+      &-title {
+        font-size: 2.6rem;
+      }
+      &-prefix {
+        font-size: 2rem;
+      }
+      &-button {
+        width: 3.9rem;
+        height: 3.9rem;
+      }
+    }
+
+    &__etc {
+      &-button {
+        width: 3.9rem;
+        height: 3.9rem;
+      }
+    }
+  }
 }
 
 @include for-mobile-only {
   .todo {
     &__wrapper {
+      flex: 0 0 100%;
+
+      min-width: 0;
       max-width: 41.4rem;
     }
   }
@@ -354,14 +667,14 @@
       background-size: 19rem 1rem;
     }
     &__profile {
-      top: 3rem;
-      left: 3rem;
+      top: 2.7rem;
+      left: 2.7rem;
     }
 
     &__button {
       &--logout {
-        top: 3rem;
-        right: 3rem;
+        top: 2.7rem;
+        right: 2.7rem;
 
         background-position: right .72rem center;
         background-size: 2.1rem 2.1rem;
@@ -389,11 +702,36 @@
       background-size: 2.3rem 2.3rem;
     }
   }
-}
 
-.todo-item {
-  width: 100%;
-  height: 9.8rem;
+  .todo-item {
+    height: 7rem;
 
-  background-color: #fff;
+    .todo-item__main {
+      &-label {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+      &-title {
+        font-size: 2rem;
+
+        letter-spacing: -1px;
+      }
+      &-prefix {
+        font-size: 1.6rem;
+
+        letter-spacing: -.8px;
+      }
+      &-button {
+        width: 3rem;
+        height: 3rem;
+      }
+    }
+
+    &__etc {
+      &-button {
+        width: 3rem;
+        height: 3rem;
+      }
+    }
+  }
 }
