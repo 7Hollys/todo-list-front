@@ -47,8 +47,6 @@ const TodoList = ({
   const history = useHistory()
   const onClickLogout = () => {
     logOut()
-
-    history.replace("/sign_in")
   }
 
   const onClickCategoryAll = () => {
