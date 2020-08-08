@@ -14,7 +14,7 @@ import {
   etcOpen,
   getTodoItems,
 } from "modules/todos"
-import { useHistory } from "react-router-dom"
+import DateFormat from "libs/DataFormat"
 
 interface IProps {
   user: IUser
@@ -44,7 +44,6 @@ const TodoList = ({
   etcOpen,
   getTodoItems,
 }: IProps) => {
-  const history = useHistory()
   const onClickLogout = () => {
     logOut()
   }
@@ -178,7 +177,7 @@ const TodoList = ({
                         <label htmlFor={`id${item.id}`} className="todo-list__item-checkbox-label"></label>
                       </div>
                       <div className="todo-list__item-element todo-list__item-element--content">
-                        <div className="todo-list__item-prefix">{item.createdAt}</div>
+                        <div className="todo-list__item-prefix">{DateFormat(item.createdAt)}</div>
                         <h2 className="todo-list__item-title">{item.contents}</h2>
                       </div>
                       <div className="todo-list__item-element todo-list__item-element--etc">
