@@ -1,0 +1,49 @@
+@import 'variable.scss';
+
+.ErrorPage {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  height: 100%;
+
+  .error-code {
+    font-size: 14rem;
+    font-weight: 700;
+
+    position: relative;
+
+    margin-bottom: 2rem;
+
+    &:after {
+      font-size: 3rem;
+
+      position: absolute;
+      right: 0;
+      bottom: 0;
+
+      content: 'Oops..';
+      transform: translate(3rem, 0) rotate(3deg);
+
+      opacity: .2;
+    }
+  }
+  .error-message {
+    font-size: 1.4rem;
+
+    margin-bottom: 2rem;
+    padding: 0 2rem;
+
+    text-align: center;
+  }
+  .go-to-back {
+    font-size: 1.6rem;
+
+    padding: 1rem 3rem;
+
+    color: $primary-color;
+    border-radius: 10rem;
+    background-color: $defalut-color;
+  }
+}

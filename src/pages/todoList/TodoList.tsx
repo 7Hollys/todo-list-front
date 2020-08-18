@@ -1,119 +1,201 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import "./TodoList.scss"
 import { connect } from "react-redux"
 import { IStore } from "modules/index"
-import { logOut } from "modules/user"
+import { IUser, logOut } from "modules/user"
+import { ITodos } from "modules/todos"
+import {
+  categoryAll,
+  categoryDone,
+  itemUpdate,
+  postTodoItem,
+  updateTodoItem,
+  deleteTodoItem,
+  etcOpen,
+  getTodoItems,
+} from "modules/todos"
+import { useHistory } from "react-router-dom"
 
 interface IProps {
-  name: string
-  profileImage: string
+  user: IUser
+  todos: ITodos
+
   logOut: Function
+  categoryAll: Function
+  categoryDone: Function
+  postTodoItem: Function
+  itemUpdate: Function
+  updateTodoItem: Function
+  deleteTodoItem: Function
+  etcOpen: Function
+  todoItems: Function
+  getTodoItems: Function
 }
 
-const TodoList = ({ name, profileImage, logOut }: IProps) => {
+const TodoList = ({
+  user,
+  todos,
+  logOut,
+  categoryAll,
+  categoryDone,
+  postTodoItem,
+  updateTodoItem,
+  deleteTodoItem,
+  etcOpen,
+  getTodoItems,
+}: IProps) => {
+  const history = useHistory()
   const onClickLogout = () => {
     logOut()
   }
 
+  const onClickCategoryAll = () => {
+    categoryAll()
+  }
+
+  const onClickCategoryDone = () => {
+    categoryDone()
+  }
+
+  const onSubmitPostItem = (event: any) => {
+    event.preventDefault()
+    postTodoItem(user.token, inputText)
+    setInputText("")
+  }
+
+  const onClickUpdateItem = (item: any) => {
+    item.isChecked = !item.isChecked
+    updateTodoItem(user.token, item)
+  }
+
+  const onClickDeleteItem = (item: any) => {
+    deleteTodoItem(user.token, item)
+  }
+
+  const onClickEtcOpen = (id: string | null = null) => {
+    etcOpen({ id })
+  }
+
+  const [inputText, setInputText] = useState("")
+
+  const onChangeInput = (event: any) => {
+    setInputText(event.target.value)
+  }
+
+  useEffect(() => {
+    getTodoItems(user.token)
+  }, [getTodoItems, user.token])
+
   return (
     <div className="todo">
-      <div className="todo__bg todo__bg--modal">
+      <div className="todo__bg">
         <div className="todo-header">
           <div className="todo-header__wrapper">
             <header className="todo-logo">
               <h1 className="todo-logo__title">TO-DOs</h1>
               <div className="todo-logo__profile">
-                <img className="todo-logo__profile-image" src={profileImage} alt="Profile"></img>
-                <div className="todo-logo__profile-nickname">{name}</div>
+                <img className="todo-logo__profile-image" src={user.profileImage} alt="Profile"></img>
+                <div className="todo-logo__profile-nickname">{user.name}</div>
               </div>
               <button className="todo-logo__button--logout" onClick={() => onClickLogout()}>
                 로그아웃
               </button>
             </header>
-            <form className="todo-register">
-              <input className="todo-register__input" type="text" placeholder="NEW TODO" />
+            <form className="todo-register" onSubmit={onSubmitPostItem}>
+              <input
+                className="todo-register__input"
+                type="text"
+                placeholder="NEW TODO"
+                value={inputText}
+                onChange={(value) => onChangeInput(value)}
+              />
               <button className="todo-register__button" type="submit">
                 등록
               </button>
             </form>
-            <nav className="todo-filter todo-filter--done">
-              <button className="todo-filter__button todo-filter__button--all">전체 목록</button>
-              <div className="todo-filter__status"></div>
-              <button className="todo-filter__button todo-filter__button--checked">완료된 목록</button>
+            <nav
+              className={todos.category === "all" ? "todo-filter todo-filter--all" : "todo-filter todo-filter--done"}
+            >
               <div className="todo-filter__shadow"></div>
+              <div className="todo-filter__wrapper">
+                <button className="todo-filter__button todo-filter__button--all" onClick={() => onClickCategoryAll()}>
+                  전체 목록
+                </button>
+                <div className="todo-filter__status"></div>
+                <button
+                  className="todo-filter__button todo-filter__button--checked"
+                  onClick={() => onClickCategoryDone()}
+                >
+                  완료된 목록
+                </button>
+              </div>
             </nav>
           </div>
         </div>
         <div className="todo__wrapper">
           <div className="todo-list">
-            <div className="todo-item">
-              <div className="todo-item__slider todo-item__slider--active">
-                <div className="todo-item__main">
-                  <div className="todo-item__main-wrapper todo-item__main-wrapper--status">
-                    <input id="id1" className="todo-item__main-checkbox" type="checkbox" />
-                    <label htmlFor="id1" className="todo-item__main-label"></label>
-                  </div>
-                  <div className="todo-item__main-wrapper todo-item__main-wrapper--content">
-                    <div className="todo-item__main-prefix">3분전</div>
-                    <h2 className="todo-item__main-title">맑은고딕</h2>
-                  </div>
-                  <div className="todo-item__main-wrapper todo-item__main-wrapper--etc">
-                    <button className="todo-item__main-button todo-item__main-button--close"></button>
+            {todos.todos
+              .filter((item: any) => {
+                if (todos.category === "all") {
+                  return true
+                }
+
+                if (todos.category === "done" && item.isChecked) {
+                  return true
+                }
+
+                return false
+              })
+              .map((item: any) => (
+                <div className="todo-item" key={item.id}>
+                  <div
+                    className={`${item.id === todos.etcActiveId ? "todo-item__slider--active" : ""} todo-item__slider`}
+                  >
+                    <div className="todo-item__main">
+                      <div className="todo-item__main-wrapper todo-item__main-wrapper--status">
+                        <input
+                          id={`id${item.id}`}
+                          className="todo-item__main-checkbox"
+                          type="checkbox"
+                          onClick={() => onClickUpdateItem(item)}
+                          defaultChecked={item.isChecked ? true : false}
+                        />
+                        <label htmlFor={`id${item.id}`} className="todo-item__main-label"></label>
+                      </div>
+                      <div className="todo-item__main-wrapper todo-item__main-wrapper--content">
+                        <div className="todo-item__main-prefix">{item.createdAt}</div>
+                        <h2 className="todo-item__main-title">{item.contents}</h2>
+                      </div>
+                      <div className="todo-item__main-wrapper todo-item__main-wrapper--etc">
+                        {item.id === todos.etcActiveId ? (
+                          <button
+                            className="todo-item__main-button todo-item__main-button--close"
+                            onClick={() => onClickEtcOpen()}
+                          >
+                            닫기
+                          </button>
+                        ) : (
+                          <button
+                            className="todo-item__main-button todo-item__main-button--etc"
+                            onClick={() => onClickEtcOpen(item.id)}
+                          >
+                            더보기
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                    <div className="todo-item__etc">
+                      <button className="todo-item__etc-button todo-item__etc-button--edit">수정</button>
+                      <button
+                        className="todo-item__etc-button todo-item__etc-button--delete"
+                        onClick={() => onClickDeleteItem(item)}
+                      >
+                        삭제
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div className="todo-item__etc">
-                  <button className="todo-item__etc-button todo-item__etc-button--edit"></button>
-                  <button className="todo-item__etc-button todo-item__etc-button--delete"></button>
-                </div>
-              </div>
-            </div>
-            <div className="todo-item">
-              <div className="todo-item__slider">
-                <div className="todo-item__main">
-                  <div className="todo-item__main-wrapper todo-item__main-wrapper--status">
-                    <input id="id2" className="todo-item__main-checkbox" type="checkbox" />
-                    <label htmlFor="id2" className="todo-item__main-label"></label>
-                  </div>
-                  <div className="todo-item__main-wrapper todo-item__main-wrapper--content">
-                    <div className="todo-item__main-prefix">3분전</div>
-                    <h2 className="todo-item__main-title">맑은고딕</h2>
-                  </div>
-                  <div className="todo-item__main-wrapper todo-item__main-wrapper--etc">
-                    <button className="todo-item__main-button todo-item__main-button--etc"></button>
-                  </div>
-                </div>
-                <div className="todo-item__etc">
-                  <button className="todo-item__etc-button todo-item__etc-button--edit"></button>
-                  <button className="todo-item__etc-button todo-item__etc-button--delete"></button>
-                </div>
-              </div>
-            </div>
-            <div className="todo-item"></div>
-            <div className="todo-item"></div>
-            <div className="todo-item"></div>
-            <div className="todo-item"></div>
-            <div className="todo-item"></div>
-            <div className="todo-item"></div>
-            <div className="todo-item"></div>
-            <div className="todo-item"></div>
-            <div className="todo-item"></div>
-            <div className="todo-item"></div>
-            <div className="todo-item"></div>
-            <div className="todo-item"></div>
-            <div className="todo-item"></div>
-            <div className="todo-item"></div>
-            <div className="todo-item"></div>
-            <div className="todo-item"></div>
-            <div className="todo-item"></div>
-          </div>
-        </div>
-      </div>
-      <div className="todo-modifier">
-        <div className="todo-modifier__wrapper">
-          <input className="todo-modifier__input" type="text" />
-          <div className="todo-modifier__etc">
-            <button className="todo-modifier__button todo-modifier__button--ok"></button>
-            <button className="todo-modifier__button todo-modifier__button--cancel"></button>
+              ))}
           </div>
         </div>
       </div>
@@ -123,8 +205,8 @@ const TodoList = ({ name, profileImage, logOut }: IProps) => {
 
 export default connect(
   (store: IStore) => ({
-    name: store.user.name,
-    profileImage: store.user.profileImage,
+    user: store.user,
+    todos: store.todos,
   }),
-  { logOut }
+  { logOut, categoryAll, categoryDone, itemUpdate, postTodoItem, updateTodoItem, deleteTodoItem, etcOpen, getTodoItems }
 )(TodoList)

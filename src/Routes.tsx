@@ -6,6 +6,7 @@ import { IStore } from "modules/index"
 
 import SignIn from "./pages/signIn/SignIn"
 import TodoList from "./pages/todoList/TodoList"
+import ErrorPage from "./pages/errorPage/ErrorPage"
 import Token from "./pages/auth/token/Token"
 
 interface IProps {
@@ -18,6 +19,7 @@ const Routes = ({ token }: IProps) => {
       <Switch>
         <PublicRoute path="/auth/token" component={Token} token={token} />
         <PublicRoute path="/sign_in" component={SignIn} token={token} />
+        <PublicRoute path="/error_page" component={ErrorPage} />
         <PrivateRoute path="/todo_list" component={TodoList} token={token} />
         <Redirect to="/todo_list" />
       </Switch>
