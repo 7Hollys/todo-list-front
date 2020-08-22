@@ -10,6 +10,7 @@ const ITEM_DELETE = "todos/ITEM_DELETE"
 const ETC_OPEN = "todos/ETC_OPEN"
 
 const TODO_ITEMS = "todos/TODO_ITEMS"
+const MODEL_OPEN = "todos/MODEL_OPEN"
 
 export const categoryAll = createAction(CATEGORY_ALL)
 export const categoryDone = createAction(CATEGORY_DONE)
@@ -18,11 +19,13 @@ export const itemUpdate = createAction(ITEM_UPDATE)
 export const itemDelete = createAction(ITEM_DELETE)
 export const etcOpen = createAction(ETC_OPEN)
 export const todoItems = createAction(TODO_ITEMS)
+export const modelOpen = createAction(MODEL_OPEN)
 
 export interface ITodos {
   category: string
   etcActiveId: null | number
   todos: any[]
+  modelActiveItem: any
 }
 
 interface IItemCheckAction {
@@ -41,6 +44,7 @@ const initialState: ITodos = {
   category: "all",
   etcActiveId: null,
   todos: [],
+  modelActiveItem: null,
 }
 
 export const getTodoItems = (token: string, sequence: number = 0) => async (dispatch: any) => {
@@ -86,6 +90,10 @@ export const updateTodoItem = (token: string, item: any) => async (dispatch: any
       Authorization: `Bearer ${token}`,
       "content-type": "application/json",
     },
+  })
+  dispatch({
+    type: MODEL_OPEN,
+    payload: null,
   })
 }
 
@@ -145,6 +153,10 @@ const todos: any = handleActions(
     [TODO_ITEMS]: (state, action: ITodoItems) => ({
       ...state,
       todos: state.todos.concat(action.payload),
+    }),
+    [MODEL_OPEN]: (state, action: any) => ({
+      ...state,
+      modelActiveItem: action.payload,
     }),
   },
   initialState

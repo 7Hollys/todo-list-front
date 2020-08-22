@@ -13,6 +13,7 @@ import {
   deleteTodoItem,
   etcOpen,
   getTodoItems,
+  modelOpen,
 } from "modules/todos"
 import { useHistory } from "react-router-dom"
 
@@ -30,6 +31,7 @@ interface IProps {
   etcOpen: Function
   todoItems: Function
   getTodoItems: Function
+  modelOpen: Function
 }
 
 const TodoList = ({
@@ -43,6 +45,7 @@ const TodoList = ({
   deleteTodoItem,
   etcOpen,
   getTodoItems,
+  modelOpen,
 }: IProps) => {
   const history = useHistory()
   const onClickLogout = () => {
@@ -86,9 +89,20 @@ const TodoList = ({
     getTodoItems(user.token)
   }, [getTodoItems, user.token])
 
+  const [editInputText, setEditInputText] = useState("")
+
+  const onSubmitPutItem = (event: any) => {
+    event.preventDefault()
+    updateTodoItem(user.token, {
+      ...todos.modelActiveItem,
+      editInputText,
+    })
+    setEditInputText("")
+  }
+
   return (
     <div className="todo">
-      <div className="todo__bg">
+      <div className={`todo__bg ${todos.modelActiveItem && "todo__bg--modal"}`}>
         <div className="todo-header">
           <div className="todo-header__wrapper">
             <header className="todo-logo">
@@ -185,7 +199,14 @@ const TodoList = ({
                       </div>
                     </div>
                     <div className="todo-item__etc">
-                      <button className="todo-item__etc-button todo-item__etc-button--edit">수정</button>
+                      <button
+                        className="todo-item__etc-button todo-item__etc-button--edit"
+                        onClick={() => {
+                          modelOpen(item)
+                        }}
+                      >
+                        수정
+                      </button>
                       <button
                         className="todo-item__etc-button todo-item__etc-button--delete"
                         onClick={() => onClickDeleteItem(item)}
@@ -199,6 +220,36 @@ const TodoList = ({
           </div>
         </div>
       </div>
+      {todos.modelActiveItem && (
+        <div
+          className="todo-modifier"
+          onClick={() => {
+            modelOpen()
+            etcOpen({})
+          }}
+        >
+          <form className="todo-modifier__wrapper" onSubmit={onSubmitPutItem}>
+            <input
+              className="todo-modifier__input"
+              type="text"
+              value={editInputText}
+              onChange={(event) => setEditInputText(event.target.value)}
+            />
+            <div className="todo-modifier__etc">
+              <button className="todo-modifier__button todo-modifier__button--ok">수정</button>
+              <button
+                className="todo-modifier__button todo-modifier__button--cancel"
+                onClick={() => {
+                  modelOpen()
+                  etcOpen({})
+                }}
+              >
+                닫기
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   )
 }
@@ -208,5 +259,16 @@ export default connect(
     user: store.user,
     todos: store.todos,
   }),
-  { logOut, categoryAll, categoryDone, itemUpdate, postTodoItem, updateTodoItem, deleteTodoItem, etcOpen, getTodoItems }
+  {
+    logOut,
+    categoryAll,
+    categoryDone,
+    itemUpdate,
+    postTodoItem,
+    updateTodoItem,
+    deleteTodoItem,
+    etcOpen,
+    getTodoItems,
+    modelOpen,
+  }
 )(TodoList)

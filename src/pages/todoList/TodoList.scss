@@ -193,6 +193,18 @@
 
   $todo-filter: &;
 
+  &__wrapper {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+  }
   &__button {
     font-size: 0;
 
@@ -244,6 +256,7 @@
   }
   &__shadow {
     position: absolute;
+    z-index: 1;
     top: 0;
     left: 0;
 
@@ -296,7 +309,7 @@
   flex: 0 0 auto;
 
   width: 100%;
-  height: 10rem;
+  min-height: 10rem;
 
   $todo-item: &;
 
@@ -424,6 +437,7 @@
       }
     }
   }
+
   &__etc {
     display: flex;
     align-items: center;
@@ -545,7 +559,12 @@
   justify-content: center;
 
   &--modal {
-    filter: blur(1rem);
+    .todo-header {
+      filter: blur(1rem);
+    }
+    .todo__wrapper {
+      filter: blur(1rem);
+    }
   }
 }
 
@@ -608,9 +627,9 @@
   }
 
   .todo-item {
-    height: 9rem;
+    min-height: 9rem;
 
-    .todo-item__main {
+    &__main {
       &-label {
         width: 3.3rem;
         height: 3.3rem;
@@ -704,9 +723,26 @@
   }
 
   .todo-item {
-    height: 7rem;
+    min-height: 7rem;
 
-    .todo-item__main {
+    &__slider {
+      &--active {
+        transform: translate(-12rem, 0);
+      }
+    }
+
+    &__main {
+      &-checkbox {
+        &:checked {
+          & + .todo-item__main-label::before {
+            top: -.1em;
+            left: .3rem;
+
+            width: 2.3rem;
+            height: 1.7rem;
+          }
+        }
+      }
       &-label {
         width: 2.5rem;
         height: 2.5rem;
@@ -724,13 +760,32 @@
       &-button {
         width: 3rem;
         height: 3rem;
+
+        &--etc {
+          background-size: 1.7rem auto;
+        }
+        &--close {
+          background-size: 1.4rem 1.4rem;
+        }
       }
     }
 
     &__etc {
+      flex: 0 0 12rem;
+
       &-button {
         width: 3rem;
         height: 3rem;
+
+        &:not(:first-child) {
+          margin: 0 0 0 2rem;
+        }
+        &--edit {
+          background-size: auto 1.4rem;
+        }
+        &--delete {
+          background-size: auto 1.4rem;
+        }
       }
     }
   }
