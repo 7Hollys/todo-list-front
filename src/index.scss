@@ -1,5 +1,5 @@
-@import './variable.scss';
-@import url('https://fonts.googleapis.com/css2?family=Bellota:wght@700&display=swap');
+@import "./variable.scss";
+@import url("https://fonts.googleapis.com/css2?family=Bellota:wght@700&display=swap");
 
 html,
 body,
@@ -94,8 +94,8 @@ video {
   border: 0;
   outline: none;
 
-  -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
 }
 
 article,
@@ -118,6 +118,8 @@ html {
   display: flex;
 
   width: 100%;
+  min-width: 280px;
+  height: auto;
   min-height: 100%;
 
   -webkit-text-size-adjust: 100%;
@@ -130,11 +132,10 @@ body {
   display: flex;
   flex: 1;
 
-  letter-spacing: -.025rem;
+  letter-spacing: -0.025rem;
 
   color: $defalut-color;
   background-color: $primary-color;
-  // overscroll-behavior: none;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -153,7 +154,7 @@ q {
 blockquote {
   &:before,
   &:after {
-    content: '';
+    content: "";
     content: none;
   }
 }
@@ -161,7 +162,7 @@ blockquote {
 q {
   &:before,
   &:after {
-    content: '';
+    content: "";
     content: none;
   }
 }
@@ -188,7 +189,7 @@ textarea {
   margin: 0;
   padding: 0;
 
-  letter-spacing: -.025rem;
+  letter-spacing: -0.025rem;
 
   border: 0;
   border-radius: 0;
@@ -207,7 +208,7 @@ button {
   padding: 0;
 
   cursor: pointer;
-         user-select: none;
+  user-select: none;
   letter-spacing: inherit;
 
   border: none;
