@@ -1,190 +1,276 @@
-@import 'variable.scss';
+@import "variable.scss";
 
 .todo {
   display: flex;
+  flex: 1;
   justify-content: center;
 
-  height: 100%;
+  padding: 0;
 
-  background-color: $primary-color;
-  background-image: url('/images/ic_clock.svg');
-  background-repeat: no-repeat;
-  background-position: bottom -15rem left calc(50% + 42.5rem);
+  $todo: &;
 
-  &-wrapper {
+  &--chatting {
+    padding: 0 33% 0 0;
+
+    #{$todo}-header {
+      &__fixed {
+        padding: 0 33% 0 0;
+      }
+    }
+    #{$todo}-footer {
+      &__fixed {
+        padding: 0 33% 0 0;
+      }
+    }
+
+    .chatting {
+      right: 0;
+
+      transform: translate(0, 0);
+    }
+  }
+
+  &--modal {
+    #{$todo}-header {
+      filter: blur(1rem);
+    }
+    #{$todo}__wrapper {
+      filter: blur(1rem);
+    }
+  }
+
+  &__wrapper {
     display: flex;
-    flex-direction: column;
+    flex: 0 0 81.25%;
+
+    min-width: 38.4rem;
+    max-width: 67.8rem;
+    margin: 0 1.5rem 2rem;
+    padding: 36.7rem 0 5rem 0;
+
+    border-radius: 0 0 5rem 5rem;
+    background-color: #fff;
+    box-shadow: 0 -1px 3rem rgba(0, 0, 0, 0.078);
+  }
+
+  &-header {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+
+    overflow: auto;
 
     width: 100%;
-    max-width: 67.4rem;
+    height: 46.7rem;
+    padding: 10rem 0 0 0;
+
+    transform: translate(0rem, -10rem);
+
+    background-color: $primary-color;
+
+    &__fixed {
+      display: flex;
+      justify-content: center;
+
+      width: 100%;
+      min-width: 28rem;
+      height: 100%;
+    }
+
+    &__wrapper {
+      display: flex;
+      align-content: flex-start;
+      flex: 0 0 81.25%;
+      flex-wrap: wrap;
+
+      min-width: 38.4rem;
+      max-width: 67.8rem;
+      margin: 0 1.5rem;
+    }
   }
-}
 
-.todo-header {
-  position: relative;
-
-  height: 9.3rem;
-  margin: 9rem 0 0 0;
-
-  text-align: center;
-
-  &__title {
-    font-family: 'Bellota', -apple-system, sans-serif;
-    font-size: 7.4rem;
-
-    background-image: url('/images/ic_header_bar.svg');
-    background-repeat: no-repeat;
-    background-position: bottom 1.5rem center;
-    background-size: 31rem 1.6rem;
-  }
-  &__logout {
-    font-size: 0;
-
-    position: absolute;
-    top: -50%;
-    right: .5rem;
-
-    width: 4.2rem;
-    height: 4.2rem;
-
-    transform: translate(0, -50%);
-
-    border-radius: 50%;
-    background-color: $defalut-color;
-    background-image: url('/images/ic_logout.svg');
-    background-repeat: no-repeat;
-    background-position: right .67rem center;
-    background-size: 2.3rem 2.3rem;
-  }
-  &__profile {
-    position: absolute;
-    top: -50%;
-    left: .5rem;
+  &-logo {
+    position: relative;
 
     display: flex;
     align-items: center;
+    flex: 1 1 100%;
+    justify-content: center;
 
-    transform: translate(0, -50%);
-  }
-  &__profile-image {
-    width: 4.2rem;
-    height: 4.2rem;
-    margin-right: 1rem;
+    box-sizing: content-box;
+    height: 9.3rem;
+    padding: 9rem 0 0 0;
 
-    border-radius: 50%;
-  }
-  &__nickname {
-    font-size: 1.4rem;
-    font-weight: 700;
-  }
-  &__nickname-suffix {
-    font-size: 1.2rem;
-    font-weight: 400;
+    &__title {
+      font-family: "Bellota", -apple-system, sans-serif;
+      font-size: 7.4rem;
 
-    margin-left: .4rem;
-  }
-}
+      padding: 0 2.5rem;
 
-.todo-register {
-  position: relative;
+      text-align: center;
 
-  height: 5.3rem;
-  margin: 2.4rem 0 0 0;
-
-  &__input {
-    font-family: $default-font;
-    font-size: 2rem;
-
-    width: 100%;
-    height: 5.4rem;
-    padding: 1.4rem 2.5rem;
-
-    letter-spacing: -1px;
-
-    border-radius: 2.75rem;
-    background-color: #fff;
-
-    &::placeholder {
-      color: $secondary-color;
+      background-image: url("/images/ic_header_bar.svg");
+      background-repeat: no-repeat;
+      background-position: bottom 1.5rem center;
+      background-size: 31rem 1.6rem;
     }
-  }
-  &__button {
-    font-size: 0;
+    &__profile {
+      position: absolute;
+      z-index: 1;
+      top: 2.7rem;
+      left: 0.5rem;
 
-    position: absolute;
-    top: 50%;
-    right: .5rem;
-
-    width: 4.4rem;
-    height: 4.4rem;
-
-    transform: translate(0, -2.2rem);
-
-    border: 2px solid $defalut-color;
-    border-radius: 50%;
-    background-color: $primary-color;
-    background-image: url('/images/ic_plus.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 2.3rem 2.3rem;
-  }
-}
-
-.todo-list {
-  display: flex;
-  overflow: hidden;
-  flex: 1;
-  flex-direction: column;
-
-  margin: 2rem 0 0 0;
-
-  border-radius: 5rem 5rem 0 0;
-  background-color: #fff;
-  box-shadow: 0 -1px 3rem rgba(0, 0, 0, .078);
-
-  &__filter {
-    display: flex;
-
-    height: 8.7rem;
-
-    &-element {
       display: flex;
       align-items: center;
-      flex: 1;
-      justify-content: center;
+
+      &-image {
+        flex: 0 0 4.2rem;
+
+        height: 4.2rem;
+
+        border-radius: 50%;
+      }
+      &-nickname {
+        font-size: 1.4rem;
+        font-weight: 700;
+
+        margin: 0 0 0 1rem;
+
+        white-space: nowrap;
+
+        &::after {
+          font-size: 1.2rem;
+          font-weight: 400;
+
+          margin: 0 0 0 0.4rem;
+
+          content: "님";
+        }
+      }
     }
-    &-button {
+    &__button {
+      &--logout {
+        font-size: 0;
+
+        position: absolute;
+        z-index: 1;
+        top: 2.7rem;
+        right: 0.5rem;
+
+        width: 4.2rem;
+        height: 4.2rem;
+
+        border-radius: 50%;
+        background-color: $defalut-color;
+        background-image: url("/images/ic_logout.svg");
+        background-repeat: no-repeat;
+        background-position: right 0.67rem center;
+        background-size: 2.3rem 2.3rem;
+      }
+    }
+  }
+
+  &-register {
+    position: relative;
+
+    display: flex;
+    flex: 1 1 100%;
+
+    margin: 2.3rem 0 0 0;
+
+    &__input {
+      font-family: $default-font;
+      font-size: 2rem;
+
+      flex: 1;
+
+      height: 5.4rem;
+      padding: 1.4rem 5.4rem 1.4rem 2.5rem;
+
+      letter-spacing: -1px;
+
+      border-radius: 2.75rem;
+      background-color: #fff;
+      box-shadow: 0 -1px 3rem rgba(0, 0, 0, 0.078);
+
+      &::placeholder {
+        color: $secondary-color;
+      }
+    }
+    &__button {
       font-size: 0;
 
-      width: 29rem;
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      right: 0.5rem;
 
-      transition: background-image .15s ease;
+      width: 4.4rem;
+      height: 4.4rem;
+
+      transform: translate(0, -2.2rem);
+
+      border: 2px solid $defalut-color;
+      border-radius: 50%;
+      background-color: $primary-color;
+      background-image: url("/images/ic_plus.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 2.5rem 2.5rem;
+    }
+  }
+
+  &-filter {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    flex: 1 1 100%;
+
+    height: 8.7rem;
+    margin: 2rem 0 0 0;
+
+    border-radius: 5rem 5rem 0 0;
+    background-color: #fff;
+
+    $todo-filter: &;
+
+    &__wrapper {
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      left: 0;
+
+      display: flex;
+      align-items: center;
+
+      width: 100%;
+      height: 100%;
+    }
+    &__button {
+      font-size: 0;
+
+      flex: 1;
+
+      height: 100%;
 
       background-repeat: no-repeat;
       background-position: center;
+      background-size: 2.4rem auto;
 
-      $button: &;
-
-      &--left {
-        background-image: url('/images/ic_all_list.svg');
-        background-size: 2.4rem auto;
-        &#{$button}--active {
-          background-image: url('/images/ic_all_list_active.svg');
-        }
+      &--all {
+        background-image: url("/images/ic_all_list.svg");
       }
-      &--right {
-        background-image: url('/images/ic_checked_list.svg');
-        background-size: 2.6rem auto;
-        &#{$button}--active {
-          background-image: url('/images/ic_checked_list_active.svg');
-        }
+      &--checked {
+        background-image: url("/images/ic_checked_list.svg");
       }
     }
-    &-status {
+    &__status {
       position: relative;
 
-      box-sizing: border-box;
-      width: 7.5rem;
+      flex: 0 0 7.5rem;
+
       height: 3.7rem;
 
       border: 2px solid $defalut-color;
@@ -192,121 +278,146 @@
 
       &::after {
         position: absolute;
-        top: -.4rem;
-        left: -.2rem;
+        z-index: 1;
+        top: -0.4rem;
+        left: -0.2rem;
 
         box-sizing: border-box;
         width: 4.1rem;
         height: 4.1rem;
 
-        content: '';
+        content: "";
         transform: translate(0, 0);
 
         border: 2px solid $defalut-color;
         border-radius: 50%;
         background-color: $primary-color;
-        background-image: url('/images/ic_all.svg');
+        background-image: url("/images/ic_all.svg");
         background-repeat: no-repeat;
         background-position: center center;
       }
-      &--done::after {
+    }
+    &__shadow {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      border-radius: 5rem 5rem 0 0;
+      box-shadow: 0 -1px 3rem rgba(0, 0, 0, 0.078);
+    }
+    &--all {
+      #{$todo-filter}__button {
+        &--all {
+          background-image: url("/images/ic_all_list_active.svg");
+        }
+      }
+    }
+    &--done {
+      #{$todo-filter}__button {
+        &--checked {
+          background-image: url("/images/ic_checked_list_active.svg");
+        }
+      }
+      #{$todo-filter}__status::after {
         transform: translate(3.4rem, 0);
 
-        background-image: url('/images/ic_done.svg');
+        background-image: url("/images/ic_done.svg");
       }
     }
   }
-  &__section {
-    overflow-x: hidden;
-    overflow-y: auto;
-    flex: 1;
 
-    overscroll-behavior: contain;
-
-    &:empty {
-      background-image: url('/images/ic_not_plane.svg');
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: 23.7rem, auto;
-    }
-  }
-  &__article {
-    overflow: hidden;
-  }
-  &__slider {
+  &-list {
     display: flex;
-
-    height: 10rem;
-
-    transition: transform .35s ease-in-out;
+    align-content: flex-start;
+    flex: 1;
+    flex-direction: column;
 
     background-color: #fff;
 
-    &#{&}--active {
-      transform: translate(-17rem);
-
-      .todo-list__item {
-        background-color: $tertiary-color;
-      }
+    &:empty {
+      background-image: url(/images/ic_not_plane.svg);
+      background-repeat: no-repeat;
+      background-position: 50%;
+      background-size: 23.7rem, auto;
     }
   }
-  &__item {
+
+  &-item {
     display: flex;
-    flex: 0 0 100%;
+    overflow: hidden;
+    flex: 0 0 auto;
 
-    transition: background-color .35s ease-in-out;
+    min-height: 10rem;
 
-    $item: &;
-    &--checked {
-      #{$item}-title {
-        color: $secondary-color;
+    $todo-item: &;
 
-        text-decoration-line: line-through;
-      }
-    }
-    &-element {
-      &#{&}--status {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    &__slider {
+      display: flex;
+      flex: 1;
+      flex-wrap: nowrap;
 
-        width: 9rem;
-      }
-      &#{&}--content {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        justify-content: center;
-      }
-      &#{&}--etc {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      transition: transform 0.3s ease-in-out;
+      transform: translate(0, 0);
 
-        width: 10rem;
-      }
-    }
-    &-checkbox {
-      $checkbox: &;
-      &:checked {
-        & + #{$checkbox}-label::before {
-          position: absolute;
-          top: -.2rem;
-          left: .4rem;
+      &--active {
+        transform: translate(-17rem, 0);
 
-          display: inline-block;
+        #{$todo-item}__main {
+          background-color: #f1f2f3;
 
-          width: 3.2rem;
-          height: 2.5rem;
+          &-title {
+            color: #c2c2c2;
 
-          content: '';
-
-          background-image: url('/images/ic_checked.svg');
-          background-repeat: no-repeat;
-          background-position: center center;
-          background-size: 100% 100%;
+            -webkit-text-decoration-line: line-through;
+            text-decoration-line: line-through;
+          }
         }
       }
+    }
+
+    &__main {
+      display: flex;
+      flex: 0 0 100%;
+
+      transition: background 0.3s ease-in-out;
+
+      $todo-item__main: &;
+
+      &-status {
+        display: flex;
+        align-items: center;
+        flex: 0 0 8.5rem;
+        justify-content: center;
+      }
+
+      &-checkbox {
+        display: none;
+
+        &:checked {
+          & + #{$todo-item__main}-label::before {
+            position: absolute;
+            top: -0.2rem;
+            left: 0.4rem;
+
+            display: inline-block;
+
+            width: 3.2rem;
+            height: 2.5rem;
+
+            content: "";
+
+            background-image: url(/images/ic_checked.svg);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            background-size: 100% 100%;
+          }
+        }
+      }
+
       &-label {
         position: relative;
 
@@ -315,311 +426,521 @@
 
         cursor: pointer;
 
-        border: 2px solid $defalut-color;
+        border: 2px solid #333;
         border-radius: 50%;
-        background-color: $primary-color;
+        background-color: #fae062;
+      }
+
+      &-content {
+        display: flex;
+        flex: 1 1;
+        flex-direction: column;
+        justify-content: center;
+
+        padding: 1.9rem 0 1.9rem 0;
+
+        word-break: break-all;
+      }
+
+      &-title {
+        font-size: 2.7rem;
+
+        margin: 0.5rem 0 0;
+
+        letter-spacing: -1.35px;
+
+        color: #333;
+      }
+
+      &-prefix {
+        font-size: 2.1rem;
+
+        letter-spacing: -1.05px;
+
+        color: #c2c2c2;
+      }
+
+      &-etc {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 10rem;
+      }
+
+      &-button {
+        font-size: 0;
+
+        width: 4.2rem;
+        height: 4.2rem;
+
+        border-radius: 50%;
+        background-color: #f1f2f3;
+        background-repeat: no-repeat;
+        background-position: 50%;
+
+        &--etc {
+          background-image: url(/images/ic_etc.svg);
+          background-size: 2.5rem auto;
+        }
+
+        &--close {
+          background-image: url(/images/ic_close.svg);
+          background-size: 2.06rem 2.06rem;
+        }
       }
     }
-    &-prefix {
-      font-family: $default-font;
-      font-size: 2.1rem;
 
-      letter-spacing: -1.05px;
+    &__etc {
+      display: flex;
+      align-items: center;
+      flex: 0 0 17rem;
+      justify-content: center;
 
-      color: $secondary-color;
+      background-color: $primary-color;
+
+      &-button {
+        font-size: 0;
+
+        width: 4.2rem;
+        height: 4.2rem;
+
+        border: 2px solid #333;
+        border-radius: 50%;
+
+        &:not(:first-child) {
+          margin: 0 0 0 2.8rem;
+        }
+
+        &--edit {
+          background-image: url(/images/ic_edit.svg);
+          background-repeat: no-repeat;
+          background-position: 50%;
+          background-size: auto 1.9rem;
+        }
+
+        &--delete {
+          background-image: url(/images/ic_delete.svg);
+          background-repeat: no-repeat;
+          background-position: 50%;
+          background-size: auto 1.9rem;
+        }
+      }
     }
-    &-title {
-      font-family: $default-font;
-      font-size: 2.7rem;
+  }
 
-      margin: .5rem 0 0 0;
+  &-footer {
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
 
-      letter-spacing: -1.35px;
+    width: 100%;
 
-      color: $defalut-color;
+    &__fixed {
+      display: flex;
+      justify-content: center;
+
+      width: 100%;
+      min-width: 28rem;
     }
-    &-button {
+
+    &__wrapper {
+      position: relative;
+
+      display: flex;
+      align-content: flex-start;
+      flex: 0 0 81.25%;
+      flex-wrap: wrap;
+
+      min-width: 38.4rem;
+      max-width: 67.8rem;
+      margin: 0 1.5rem;
+    }
+
+    &__button {
+      &--chatting {
+        position: absolute;
+        right: 5rem;
+        bottom: 5rem;
+
+        width: 3.5rem;
+        height: 3.5rem;
+
+        background-image: url(/images/ic_sms.svg);
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    }
+  }
+
+  &-modifier {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: all;
+
+    &__wrapper {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+
+      display: flex;
+      flex-direction: column;
+
+      width: 100%;
+      max-width: 50rem;
+
+      transform: translate(-50%, -50%);
+    }
+
+    &__input {
+      font-family: $default-font;
+      font-size: 2rem;
+
+      flex: 1 1 100%;
+
+      height: 5rem;
+      margin: 0 2rem;
+      padding: 1.4rem 5.4rem 1.4rem 2.5rem;
+
+      letter-spacing: -1px;
+
+      color: #707070;
+      border-radius: 2.5rem;
+      background-color: #fff;
+      box-shadow: 0 -1px 3rem rgba(0, 0, 0, 0.078);
+
+      &::placeholder {
+        color: $secondary-color;
+      }
+    }
+
+    &__etc {
+      display: flex;
+      justify-content: center;
+
+      padding: 2rem 0 0 0;
+    }
+    &__button {
       font-size: 0;
 
-      width: 4.2rem;
-      height: 4.2rem;
-
-      border-radius: 50%;
-      background-color: $tertiary-color;
       background-repeat: no-repeat;
-      background-position: center center;
+      background-position: center;
 
-      &#{&}--etc {
-        background-image: url('/images/ic_etc.svg');
-        background-size: 2.5rem auto;
+      &:not(:first-child) {
+        margin: 0 0 0 1.4rem;
       }
-      &#{&}--close {
-        background-image: url('/images/ic_close.svg');
-        background-size: 2.06rem 2.06rem;
+      &--ok {
+        width: 2.5rem;
+        height: 1.9rem;
+
+        background-image: url("/images/ic_checked.svg");
+        background-size: 2.5rem, 1.9rem;
+      }
+      &--cancel {
+        width: 2rem;
+        height: 2rem;
+
+        background-image: url("/images/ic_close-active.svg");
+        background-size: 2rem;
       }
     }
   }
-  &__etc {
-    display: flex;
-    align-items: center;
-    flex: 0 0 17rem;
-    justify-content: center;
+}
 
-    background-color: $primary-color;
+.chatting {
+  font-size: 2rem;
+
+  position: fixed;
+  z-index: 998;
+  top: 0;
+  right: -33%;
+
+  display: flex;
+  overflow: auto;
+
+  width: 33%;
+  height: 100%;
+
+  transform: translate(100%, 0);
+
+  color: rgb(255, 255, 255);
+  background-color: #3e3e3e;
+
+  &__wrapper {
+    display: 1;
+
+    width: 100%;
+    min-width: 28rem;
   }
-  &__etc-button {
-    font-size: 0;
+}
 
-    width: 4.2rem;
-    height: 4.2rem;
+@include for-tablet-max {
+  .todo {
+    .todo-header {
+      &__fixed {
+        padding: 0;
+      }
+    }
+    &--chatting {
+      padding: 0;
+    }
+    .todo-footer {
+      &__fixed {
+        padding: 0;
+      }
+    }
+  }
 
-    border: 2px solid $defalut-color;
-    border-radius: 50%;
-
-    &:not(:first-child) {
-      margin: 0 0 0 2.8rem;
-    }
-    &#{&}--edit {
-      background-image: url('/images/ic_edit.svg');
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: auto 1.9rem;
-    }
-    &#{&}--delete {
-      background-image: url('/images/ic_delete.svg');
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: auto 1.9rem;
-    }
+  .chatting {
+    width: 100%;
   }
 }
 
 @include for-tablet-below {
   .todo {
-    &-wrapper {
-      max-width: 62.8rem;
+    &__wrapper {
+      padding: 36rem 0 5rem 0;
     }
-  }
-  .todo-header {
-    &__logout {
-      top: -50%;
+
+    &-header {
+      height: 46rem;
     }
-    &__profile {
-      top: -50%;
+
+    &-logo {
+      margin: 0;
+
+      &__profile {
+        &-image {
+          flex: 0 0 4rem;
+
+          height: 4rem;
+        }
+      }
+
+      &__button {
+        &--logout {
+          width: 4rem;
+          height: 4rem;
+        }
+      }
     }
-  }
-  .todo-list {
-    &__filter {
+
+    &-filter {
       height: 8rem;
 
-      &-status {
-        width: 7rem;
-      }
-      &-button {
-        &--left {
+      $todo-filter: &;
+
+      &__button {
+        &:first-child {
           background-size: 2.25rem auto;
         }
-        &--right {
-          background-size: 2.425rem auto;
+        &:last-child {
+          background-size: 1.92rem 1.92rem;
         }
       }
-    }
-    &__section {
-      &:empty {
-        background-size: 17.1rem, auto;
-      }
-    }
-    &__slider {
-      height: 9rem;
-      &#{&}--active {
-        transform: translate(-15rem);
-      }
-    }
-    &__item {
-      &-element {
-        &#{&}--status {
-          width: 8.5rem;
-        }
-        &#{&}--etc {
-          width: 9rem;
-        }
-      }
-      &-checkbox {
-        $checkbox: &;
-        &:checked {
-          & + #{$checkbox}-label::before {
-            top: -.15rem;
-            left: .3rem;
 
-            width: 3rem;
-          }
+      &__status {
+        flex: 0 0 7rem;
+
+        height: 3.5rem;
+
+        border-radius: 1.75rem;
+
+        &::after {
+          width: 3.9rem;
+          height: 3.9rem;
         }
+      }
+    }
+
+    &-item {
+      min-height: 9rem;
+
+      &__main {
         &-label {
           width: 3.3rem;
           height: 3.3rem;
         }
-      }
-      &-prefix {
-        font-size: 2rem;
-      }
-      &-title {
-        font-size: 2.6rem;
-      }
-      &-button {
-        width: 3.9rem;
-        height: 3.9rem;
 
-        &#{&}--etc {
-          background-size: 2.2rem auto;
+        &-title {
+          font-size: 2.6rem;
         }
-        &#{&}--close {
-          background-size: 1.92rem 1.92rem;
+
+        &-prefix {
+          font-size: 2rem;
+        }
+
+        &-button {
+          width: 3.9rem;
+          height: 3.9rem;
         }
       }
-    }
-    &__etc {
-      flex: 0 0 15rem;
-    }
-    &__etc-button {
-      width: 3.9rem;
-      height: 3.9rem;
 
-      &:not(:first-child) {
-        margin: 0 0 0 2.6rem;
-      }
-      &#{&}--edit {
-        background-size: auto 1.82rem;
-      }
-      &#{&}--delete {
-        background-size: auto 1.82rem;
+      &__etc {
+        &-button {
+          width: 3.9rem;
+          height: 3.9rem;
+        }
       }
     }
   }
 }
 
 @include for-mobile-only {
-  .todo-header {
-    height: 18.3rem;
-    margin: 0 2rem;
-    padding: 13.5rem 0 0;
+  .todo {
+    &__wrapper {
+      flex: 1;
 
-    &__title {
-      font-size: 4.6rem;
-
-      background-position: bottom 1rem center;
-      background-size: 19rem 1rem;
+      min-width: 25rem;
+      max-width: 41.4rem;
     }
-    &__logout {
-      top: 3rem;
 
-      width: 4rem;
-      height: 4rem;
+    &-header {
+      &__wrapper {
+        flex: 1;
 
-      transform: translate(0, 0);
-
-      background-position: right .65rem center;
-      background-size: 2.17rem 2.17rem;
-    }
-    &__profile {
-      top: 3rem;
-
-      transform: translate(0, 0);
-    }
-  }
-  .todo-register {
-    margin: 2.4rem 2rem 0;
-
-    &__input {
-      font-size: 1.6rem;
-
-      height: 5rem;
-
-      letter-spacing: -.8px;
-
-      border-radius: 2.5rem;
-    }
-    &__button {
-      right: .8rem;
-
-      width: 4rem;
-      height: 4rem;
-
-      transform: translate(0, -2.15rem);
-    }
-  }
-  .todo-list {
-    &__section {
-      &:empty {
-        background-size: 14.9rem, auto;
+        min-width: 25rem;
+        max-width: 41.4rem;
       }
     }
-    &__slider {
-      height: 7rem;
-      &#{&}--active {
-        transform: translate(-12rem);
+
+    &-logo {
+      height: 5.8rem;
+      padding: 14.2rem 0 0 0;
+
+      &__title {
+        font-size: 4.6rem;
+
+        padding: 0 1rem;
+
+        background-position: bottom 0.8rem center;
+        background-size: 19rem 1rem;
       }
-    }
-    &__item {
-      &-element {
-        &#{&}--status {
-          width: 6.5rem;
-        }
-        &#{&}--etc {
-          width: 7rem;
+      &__profile {
+        top: 2.7rem;
+        left: 1.2rem;
+      }
+
+      &__button {
+        &--logout {
+          top: 2.7rem;
+          right: 1.2rem;
+
+          background-position: right 0.72rem center;
+          background-size: 2.1rem 2.1rem;
         }
       }
-      &-checkbox {
-        $checkbox: &;
-        &:checked {
-          & + #{$checkbox}-label::before {
-            top: -.5rem;
-            left: .2rem;
+    }
 
-            width: 2.3rem;
+    &-register {
+      margin: 1rem 0 0;
+
+      &__input {
+        font-size: 1.6rem;
+
+        height: 5rem;
+        padding: 1.4rem 5.4rem 1.4rem 2.5rem;
+
+        border-radius: 2.5rem;
+      }
+      &__button {
+        width: 4rem;
+        height: 4rem;
+
+        transform: translate(0, -2rem);
+
+        background-size: 2.3rem 2.3rem;
+      }
+    }
+
+    &-item {
+      min-height: 7rem;
+
+      &__slider {
+        &--active {
+          transform: translate(-12rem, 0);
+        }
+      }
+
+      &__main {
+        &-checkbox {
+          &:checked {
+            & + .todo-item__main-label::before {
+              top: -0.1em;
+              left: 0.3rem;
+
+              width: 2.3rem;
+              height: 1.7rem;
+            }
           }
         }
+
         &-label {
           width: 2.5rem;
           height: 2.5rem;
         }
-      }
-      &-prefix {
-        font-size: 1.6rem;
 
-        letter-spacing: -.8px;
-      }
-      &-title {
-        font-size: 2rem;
+        &-title {
+          font-size: 2rem;
 
-        letter-spacing: -1px;
-      }
-      &-button {
-        width: 3rem;
-        height: 3rem;
-
-        &#{&}--etc {
-          background-size: 1.7rem auto;
+          letter-spacing: -1px;
         }
-        &#{&}--close {
-          background-size: 1.4rem 1.4rem;
+
+        &-prefix {
+          font-size: 1.6rem;
+
+          letter-spacing: -0.8px;
+        }
+
+        &-button {
+          width: 3rem;
+          height: 3rem;
+
+          &--etc {
+            background-size: 1.7rem auto;
+          }
+
+          &--close {
+            background-size: 1.4rem 1.4rem;
+          }
+        }
+      }
+
+      &__etc {
+        flex: 0 0 12rem;
+
+        &-button {
+          width: 3rem;
+          height: 3rem;
+
+          &:not(:first-child) {
+            margin: 0 0 0 2rem;
+          }
+
+          &--edit {
+            background-size: auto 1.4rem;
+          }
+
+          &--delete {
+            background-size: auto 1.4rem;
+          }
         }
       }
     }
-    &__etc {
-      flex: 0 0 12rem;
-    }
-    &__etc-button {
-      width: 3rem;
-      height: 3rem;
 
-      &:not(:first-child) {
-        margin: 0 0 0 2rem;
-      }
-      &#{&}--edit {
-        background-size: auto 1.4rem;
-      }
-      &#{&}--delete {
-        background-size: auto 1.4rem;
+    &-footer {
+      &__wrapper {
+        flex: 1;
+
+        min-width: 25rem;
+        max-width: 41.4rem;
       }
     }
   }

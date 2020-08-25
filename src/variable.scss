@@ -2,7 +2,13 @@ $primary-color: #fae062;
 $secondary-color: #c2c2c2;
 $tertiary-color: #f1f2f3;
 $defalut-color: #333;
-$default-font: '맑음 고딕', 'Malgun Gothic', -apple-system, sans-serif;
+$default-font: "맑음 고딕", "Malgun Gothic", -apple-system, sans-serif;
+
+@mixin for-tablet-max {
+  @media (max-width: 1200px) {
+    @content;
+  }
+}
 
 @mixin for-tablet-below {
   @media (max-width: 768px) {

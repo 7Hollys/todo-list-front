@@ -1,5 +1,5 @@
-@import './variable.scss';
-@import url('https://fonts.googleapis.com/css2?family=Bellota:wght@700&display=swap');
+@import "./variable.scss";
+@import url("https://fonts.googleapis.com/css2?family=Bellota:wght@700&display=swap");
 
 html,
 body,
@@ -95,6 +95,7 @@ video {
   outline: none;
 
   -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
 }
 
 article,
@@ -113,25 +114,28 @@ section {
 
 html {
   font-size: 62.5%;
-}
 
-html,
-body {
+  display: flex;
+
   width: 100%;
-  height: 100%;
+  min-width: 280px;
+  height: auto;
+  min-height: 100%;
 
-  background-color: $primary-color;
-
-  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  // font-family: $default-font;
+  font-family: $default-font;
   font-weight: 400;
 
-  letter-spacing: -.025rem;
+  display: flex;
+  flex: 1;
+
+  letter-spacing: -0.025rem;
 
   color: $defalut-color;
+  background-color: $primary-color;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -150,7 +154,7 @@ q {
 blockquote {
   &:before,
   &:after {
-    content: '';
+    content: "";
     content: none;
   }
 }
@@ -158,7 +162,7 @@ blockquote {
 q {
   &:before,
   &:after {
-    content: '';
+    content: "";
     content: none;
   }
 }
@@ -185,7 +189,7 @@ textarea {
   margin: 0;
   padding: 0;
 
-  letter-spacing: -.025rem;
+  letter-spacing: -0.025rem;
 
   border: 0;
   border-radius: 0;
@@ -204,21 +208,19 @@ button {
   padding: 0;
 
   cursor: pointer;
-         user-select: none;
+  user-select: none;
   letter-spacing: inherit;
 
   border: none;
   background-color: transparent;
 
   -khtml-user-select: none;
-  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
 }
 
-#root {
-  height: 100%;
-}
-
+#root,
 .app {
-  height: 100%;
+  display: flex;
+  flex: 1;
 }
